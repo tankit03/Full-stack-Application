@@ -87,6 +87,24 @@ app.get('/api/get', (req, res) => {
 
     });
 
+app.delete('/api/delete/:AgentID', (req, res) => {
+    const AgentID = req.params.AgentID;
+    
+    const sqlDelete = `DELETE FROM Agents WHERE AgentID = ?`;
+
+
+    db.pool.query(sqlDelete, AgentID, (error, result) => {
+        if (error) {
+            // It's a good practice to handle errors, e.g., send an error response or log the error
+            console.error(error);
+            res.status(500).send('An error occurred');
+        } else {
+            res.send(result);
+        }
+    });
+});
+
+
 
 /*
     LISTENER

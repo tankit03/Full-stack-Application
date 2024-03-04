@@ -33,9 +33,24 @@ function App() {
       PhoneNumber: PhoneNumber,
       AgencyName: AgencyName,
       LicenseNumber: LicenseNumber
-    }).then(() => {
-      alert('successful insert');
-    });    
+    });
+    
+    setAgentList([
+      ...agentList,
+      {
+        AgentID: AgentID,
+        firstName: firstName,
+        lastName: lastName,
+        Email: Email,
+        PhoneNumber: PhoneNumber,
+        AgencyName: AgencyName,
+        LicenseNumber: LicenseNumber
+      },]);
+  };
+
+
+  const deleteAgent = (id) => {
+    Axios.delete(`http://localhost:9124/api/delete/${id}`);
   }
   
   const [count, setCount] = useState(0)
@@ -56,6 +71,7 @@ function App() {
               <th>Phone Number</th>
               <th>Agency Name</th>
               <th>License Number</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -68,6 +84,10 @@ function App() {
                 <td>{val.PhoneNumber}</td>
                 <td>{val.AgencyName}</td>
                 <td>{val.LicenseNumber}</td>
+                
+                <td>
+                  <button onClick={() => deleteAgent(val.AgentID)}>Delete</button>
+                </td>
               </tr>
             ))}
           </tbody>
