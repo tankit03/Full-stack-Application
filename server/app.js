@@ -11,15 +11,24 @@ PORT        = 9124;                 // Set a port number at the top so it's easy
 
 var db = require('./database/db-connector');  
 
+
+
+
 /*
     ROUTES
 */
 // app.js 
 
-
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get('/api/get', (req, res) => {
+    const sqlSelect = "SELECT * FROM Agents";
+    db.pool.query(sqlSelect, (err, result) => {
+        res.send(result);
+    });
+});
 
 // app.get('/', function(req, res)
 //     {

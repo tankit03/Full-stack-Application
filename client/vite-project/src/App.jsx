@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -14,6 +14,15 @@ function App() {
   const [PhoneNumber, setPhoneNumber] = useState("");
   const [AgencyName, setAgencyName] = useState("");
   const [LicenseNumber, setLicenseNumber] = useState("");
+  const [agentList, setAgentList] = useState([]);
+
+
+  useEffect(() => {
+
+    Axios.get('http://localhost:9124/api/get').then((response) => {
+      setAgentList(response.data);
+    });
+  }, []);
 
   const submitAgent = () => {
 
@@ -41,6 +50,22 @@ function App() {
     <>
       <div className="App">
         <h1>Database application</h1>
+
+       {agentList.map((val) => {
+
+        return (
+          <div className="agent">
+            <p>Agent ID: {val.AgentID}</p>
+            <p>First Name: {val.firstName}</p>
+            <p>Last Name: {val.lastName}</p>
+            <p>Email: {val.Email}</p>
+            <p>Phone Number: {val.PhoneNumber}</p>
+            <p>Agency Name: {val.AgencyName}</p>
+            <p>License Number: {val.LicenseNumber}</p>
+          </div>
+        )
+       })} 
+
 
         <div className="form">
           <label>First Name:</label>
