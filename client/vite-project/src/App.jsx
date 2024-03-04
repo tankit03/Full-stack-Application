@@ -16,6 +16,17 @@ function App() {
   const [LicenseNumber, setLicenseNumber] = useState("");
   const [agentList, setAgentList] = useState([]);
 
+  const [NewFirstAgentName, setNewFirstAgentName] = useState("");
+  const [NewLastAgentName, setNewLastAgentName] = useState("");
+  const [NewAgentEmail, setNewAgentEmail] = useState("");
+  const [NewAgentPhone, setNewAgentPhone] = useState("");
+  const [NewAgentAgency, setNewAgentAgency] = useState("");
+  const [NewAgentLicense, setNewAgentLicense] = useState("");
+  const [NewAgentList, setNewAgentList] = useState("");
+
+
+
+
   useEffect(() => {
 
     Axios.get('http://localhost:9124/api/get').then((response) => {
@@ -52,6 +63,24 @@ function App() {
   const deleteAgent = (id) => {
     Axios.delete(`http://localhost:9124/api/delete/${id}`);
   }
+
+  const updateAgent = (id) => {
+    Axios.put('http://localhost:9124/api/update', {
+      AgentID: id,
+      firstName: NewFirstAgentName,
+      lastName: NewLastAgentName,
+      Email: NewAgentEmail,
+      PhoneNumber: NewAgentPhone,
+      AgencyName: NewAgentAgency,
+      LicenseNumber: NewAgentLicense
+    });
+    setNewAgentList("");
+  }
+      
+
+
+
+
   
   const [count, setCount] = useState(0)
 
@@ -87,6 +116,32 @@ function App() {
                 
                 <td>
                   <button onClick={() => deleteAgent(val.AgentID)}>Delete</button>
+                  <input type="text" id="updateInput" onChange={(e) => {
+                    setNewFirstAgentName(e.target.value)
+                  }
+                  } />
+                  <input type="text" id="updateInput" onChange={(e) => {
+                    setNewLastAgentName(e.target.value)
+                  }
+                  } />
+                  <input type="text" id="updateInput" onChange={(e) => {
+                    setNewAgentEmail(e.target.value)
+                  }
+                  } />
+                  <input type="text" id="updateInput" onChange={(e) => {
+                    setNewAgentPhone(e.target.value)
+                  }
+                  } />
+                  <input type="text" id="updateInput" onChange={(e) => {
+                    setNewAgentAgency(e.target.value)
+                  }
+                  } />
+                  <input type="text" id="updateInput" onChange={(e) => {
+                    setNewAgentLicense(e.target.value)
+                  }
+                  } />
+                  <button onClick={() => updateAgent(val.AgentID)}>Update</button>
+
                 </td>
               </tr>
             ))}

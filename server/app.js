@@ -104,6 +104,30 @@ app.delete('/api/delete/:AgentID', (req, res) => {
     });
 });
 
+app.put('/api/update', (req, res) => {
+
+    const AgentID = req.body.AgentID;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const Email = req.body.Email;
+    const PhoneNumber = req.body.PhoneNumber;
+    const AgencyName = req.body.AgencyName;
+    const LicenseNumber = req.body.LicenseNumber;
+    
+    const sqlUpdate = `UPDATE Agents SET firstName = ?, lastName = ?, Email = ?, PhoneNumber = ?, AgencyName = ?, LicenseNumber = ? WHERE AgentID = ?`;
+
+    db.pool.query(sqlUpdate, [firstName, lastName, Email, PhoneNumber, AgencyName, LicenseNumber, AgentID], (error, result) => {
+        if (error) {
+            // It's a good practice to handle errors, e.g., send an error response or log the error
+            console.error(error);
+            res.status(500).send('An error occurred');
+        } else {
+            res.send(result);
+        }
+    });
+
+});
+
 
 
 /*
