@@ -16,7 +16,6 @@ function App() {
   const [LicenseNumber, setLicenseNumber] = useState("");
   const [agentList, setAgentList] = useState([]);
 
-
   useEffect(() => {
 
     Axios.get('http://localhost:9124/api/get').then((response) => {
@@ -38,12 +37,8 @@ function App() {
       alert('successful insert');
     });    
   }
-
   
-
   const [count, setCount] = useState(0)
-
-
 
   return (
     <>
@@ -78,8 +73,6 @@ function App() {
           </tbody>
         </table>
       </div>
-
-
         <div className="form">
           <label>First Name:</label>
           <input type="text" onChange={(e) => {
@@ -105,9 +98,7 @@ function App() {
           <input type="text" onChange={(e) => {
             setLicenseNumber(e.target.value)
           }} />
-
           <button onClick={submitAgent}>Submit</button>
-
         </div>
       </div>
     </>

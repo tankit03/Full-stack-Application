@@ -11,9 +11,6 @@ PORT        = 9124;                 // Set a port number at the top so it's easy
 
 var db = require('./database/db-connector');  
 
-
-
-
 /*
     ROUTES
 */
@@ -74,7 +71,7 @@ app.get('/api/get', (req, res) => {
 
     app.post('/api/insert', (req, res) => {
 
-        const AgentID = req.body.AgentID;
+        
         const firstName = req.body.firstName;
         const lastName = req.body.lastName;
         const Email = req.body.Email;
@@ -84,7 +81,7 @@ app.get('/api/get', (req, res) => {
 
 
         const sqlInsert = `INSERT INTO Agents (firstName, lastName, Email, PhoneNumber, AgencyName, LicenseNumber) VALUES (?, ?, ?, ?, ?, ?)`;
-        db.pool.query(sqlInsert, [AgentID, firstName, lastName, Email, PhoneNumber, AgencyName, LicenseNumber], (error, result) => {});
+        db.pool.query(sqlInsert, [firstName, lastName, Email, PhoneNumber, AgencyName, LicenseNumber], (error, result) => {});
             
 
 
