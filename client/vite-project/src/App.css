@@ -1,5 +1,36 @@
+@font-face {
+    font-family: 'Satoshi-regular';
+    src: url('./assets/fonts/Satoshi-Bold.woff') format('truetype');
+}    
+
+@font-face {
+    font-family: 'Satoshi-bold';
+    src: url('./assets/fonts/Satoshi-Bold.woff') format('truetype');
+}    
+
+@font-face {
+    font-family: 'Satoshi-light';
+    src: url('./assets/fonts/Satoshi-Light.woff') format('truetype');
+}    
+
+@font-face {
+    font-family: 'Satoshi-black';
+    src: url('./assets/fonts/Satoshi-Black.woff') format('truetype');
+}    
+
+h1 {
+    font-family: 'Satoshi-bold', Arial;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #000000;
+    font-size: 2.5rem;
+  }
+
 body{
-    background-color: #ffffff;
+    
+    font-family: 'Satoshi', Arial;
+    background-color: #F0EDCF;
+    color: #000000;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -8,3 +39,77 @@ body{
     justify-content: center;
     align-items: center;
 }
+
+  
+
+  .form{
+    
+    font-family: 'Satoshi-bold';
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+    justify-content: center;
+    margin: 0px;
+    border-radius: 10px;
+  }
+
+  .form input{
+    width: 98%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+  }
+
+    .form button{
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 5px;
+        background-color: #40A2D8;
+        color: #F0EDCF;
+        font-family: 'Satoshi-bold';
+    }
+  
+.table-container {
+    
+    
+    width: 100%; /* Adjusted to 100% from 80% to use full width */
+    margin: 20px auto;
+    
+  }
+
+  .table-container td{
+
+    text-align: center;
+    font-family: 'Satoshi-light';
+  }
+  
+  .table-container table {
+    
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table-container th, .table-container td {
+    
+    border: 1px solid #000000;
+    padding: 10px;
+    
+  }
+
+    .table-container th {
+        text-align: center;
+        font-family: 'Satoshi-bold';
+        align-items: center;
+        background-color: #40A2D8;
+        color:  #F0EDCF;
+    }
+
+    
+
+
+  
+  /* You may want to add more styling here for the table headers and rows */
+  

@@ -37,7 +37,6 @@ function App() {
     }).then(() => {
       alert('successful insert');
     });    
-
   }
 
   
@@ -49,22 +48,36 @@ function App() {
   return (
     <>
       <div className="App">
-        <h1>Database application</h1>
+      <h1>Database application</h1>
 
-       {agentList.map((val) => {
-
-        return (
-          <div className="agent">
-            <p>Agent ID: {val.AgentID}</p>
-            <p>First Name: {val.firstName}</p>
-            <p>Last Name: {val.lastName}</p>
-            <p>Email: {val.Email}</p>
-            <p>Phone Number: {val.PhoneNumber}</p>
-            <p>Agency Name: {val.AgencyName}</p>
-            <p>License Number: {val.LicenseNumber}</p>
-          </div>
-        )
-       })} 
+      <div className="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Agent ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Phone Number</th>
+              <th>Agency Name</th>
+              <th>License Number</th>
+            </tr>
+          </thead>
+          <tbody>
+            {agentList.map((val) => (
+              <tr key={val.AgentID}>
+                <td>{val.AgentID}</td>
+                <td>{val.firstName}</td>
+                <td>{val.lastName}</td>
+                <td>{val.Email}</td>
+                <td>{val.PhoneNumber}</td>
+                <td>{val.AgencyName}</td>
+                <td>{val.LicenseNumber}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
 
         <div className="form">
