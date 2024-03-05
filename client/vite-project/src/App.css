@@ -18,6 +18,39 @@
     src: url('./assets/fonts/Satoshi-Black.woff') format('truetype');
 }    
 
+.navbar {
+  background-color: #F0EDCF;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar .Site-title {
+  font-family: 'Satoshi-bold', Arial;
+  color: #000000;
+  text-decoration: none;
+  font-size: 2rem;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar ul li a {
+  color: #000000;
+  text-decoration: none;
+  font-family: 'Satoshi-regular', Arial;
+  font-size: 1.2rem;
+  margin-right: 20px;
+}
+
+.navbar ul li a:hover {
+  color: #333333;
+}
+
 h1 {
     font-family: 'Satoshi-bold', Arial;
     text-align: center;
