@@ -41,6 +41,8 @@ app.get('/api/get', (req, res) => {
         });
     });
 
+
+
     app.post('/api/insert', (req, res) => {
 
         
@@ -54,8 +56,6 @@ app.get('/api/get', (req, res) => {
 
         const sqlInsert = `INSERT INTO Agents (firstName, lastName, Email, PhoneNumber, AgencyName, LicenseNumber) VALUES (?, ?, ?, ?, ?, ?)`;
         db.pool.query(sqlInsert, [firstName, lastName, Email, PhoneNumber, AgencyName, LicenseNumber], (error, result) => {});
-            
-
 
     });
 
@@ -112,7 +112,141 @@ app.put('/api/update', (req, res) => {
 
 });
 
+/* ---------------------------- For Properties ------------------------------------------------------------------------------------ */
 
+app.get('/api/properties/get', (req, res) => {
+    const sqlSelect = "SELECT * FROM properties";
+    db.pool.query(sqlSelect, (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('An error occurred while fetching properties');
+        } else {
+            console.log(result);
+            res.send(result);
+            
+        }
+    });
+});
+
+app.post('/api/properties/insert', (req, res) => {
+
+    const Title = req.body.Title;
+    const City = req.body.City;
+    const State = req.body.State;
+    const Zipcode = req.body.Zipcode;
+    const Price = req.body.Price;
+    const Description = req.body.Description;
+    const PropertyType = req.body.PropertyType;
+    const Bedroom = req.body.Bedroom;
+    const Bathroom = req.body.Bathroom;
+    const SquareFeet = req.body.SquareFeet;
+    const YearBuilt = req.body.YearBuilt;
+    const RenovationDetails = req.body.RenovationDetails;
+    const UniqueFeatures = req.body.UniqueFeatures;
+    const ListingDate = req.body.ListingDate;
+    const AgentID = req.body.AgentID;
+
+    db.pool.query(sqlInsert, [Title, City, State, Zipcode, Price, Description, PropertyType, Bedroom, Bathroom, SquareFeet, YearBuilt, RenovationDetails, UniqueFeatures, ListingDate, AgentID], (error, results) => {
+        if (error) {
+            console.error("Error executing query:", error);
+            res.status(500).send("Error executing query");
+            return;
+        }
+        res.status(200).send("Property inserted successfully");
+    }); 
+});
+
+app.delete('/api/properties/delete/:PropertyID', (req, res) => {
+
+    const ProperyID = req.params.ProperyID;
+    
+    const sqlDelete = `DELETE FROM properties WHERE ProperyID = ?`;
+    db.pool.query(sqlDelete, ProperyID, (error, result) => {
+        if (error) {
+            console.error(error);
+            res.status(500).send('An error occurred');
+        } else {
+            res.send(result);
+        }
+    });
+});
+
+/* ---------------------------- For User ------------------------------------------------------------------------------------ */
+
+app.get('/api/users/get', (req, res) => {
+    console.log('GET /api/users/get called');
+    const sqlSelect = "SELECT * FROM Users";
+    db.pool.query(sqlSelect, (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('An error occurred while fetching users');
+        } else {
+            console.log(result);
+            res.send(result);
+            
+        }
+    });
+});
+
+app.post('/api/users/insert', (req, res) => {
+
+    const UserID = req.body.UserID;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const Email = req.body.Email;
+    const PhoneNumber = req.body.PhoneNumber;
+    const Budget = req.body.Budget;
+    const PasswordHash = req.body.PasswordHash;
+
+    const sqlInsert = `INSERT INTO Users (UserID, firstName, lastName, Email, PhoneNumber, Budget, PasswordHash) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    db.pool.query(sqlInsert, [UserID, firstName, lastName, Email, PhoneNumber, Budget, PasswordHash], (error, result) => {});
+
+});
+
+app.delete('/api/users/delete/:UserID', (req, res) => {
+    const UserID = req.params.UserID;
+    
+    const sqlDelete = `DELETE FROM Users WHERE UserID = ?`;
+    db.pool.query(sqlDelete, UserID, (error, result) => {
+        if (error) {
+            console.error(error);
+            res.status(500).send('An error occurred');
+        } else {
+            res.send(result);
+        }
+    });
+});
+
+app.put('/api/users/update', (req, res) => {
+
+    const UserID = req.body.UserID;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const Email = req.body.Email;
+    const PhoneNumber = req.body.PhoneNumber;
+    const Budget = req.body.Budget;
+    const PasswordHash = req.body.PasswordHash;
+
+    const sqlUpdate = `UPDATE Users SET firstName = ?, lastName = ?, Email = ?, PhoneNumber = ?, Budget = ?, PasswordHash = ? WHERE UserID = ?`;
+
+    db.pool.query(sqlUpdate, [firstName, lastName, Email, PhoneNumber, Budget, PasswordHash, UserID], (error, result) => {
+        if (error) {
+            console.error(error);
+            res.status(500).send('An error occurred');
+        } else {
+            const getUsers = `SELECT * FROM Users`;
+            db.pool.query(getUsers, (err, users) => {
+                if (err) {
+                    console.error(err);
+                    res.status(500).send('An error occurred');
+                }
+                else {
+                    res.send(users);
+                }
+            });
+        }
+    });
+});
 
 /*
     LISTENER
@@ -120,3 +254,4 @@ app.put('/api/update', (req, res) => {
 app.listen(PORT, function(){            // This is the basic syntax for what is called the 'listener' which receives incoming requests on the specified PORT.
     console.log('Express started on http://flip1.engr.oregonstate.edu' + PORT + '; press Ctrl-C to terminate.')
 });
+

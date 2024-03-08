@@ -110,6 +110,7 @@ body{
     
     width: 100%; /* Adjusted to 100% from 80% to use full width */
     margin: 20px auto;
+    overflow-x: auto;
     
   }
 
