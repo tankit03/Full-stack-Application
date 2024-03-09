@@ -376,6 +376,40 @@ app.put('/api/viewing/update', (req, res) => {
         });
 });
 
+/* ---------------------------- For Review ------------------------------------------------------------------------------------ */
+
+
+app.get('/api/review/get', (req, res) => {
+    const sqlSelect = "SELECT * FROM Reviews";
+    db.pool.query(sqlSelect, (err, result) => {
+        if(err){
+            console.error(err);
+            res.status(500).send('An error occurred while fetching reviews');
+        } else {
+            console.log(result);
+            res.send(result);
+        }
+    });
+});
+
+app.post('/api/review/insert', (req, res) => {
+
+    const Rating = req.body.Rating;
+    const Comment = req.body.Comment;
+    const ReviewDate = req.body.ReviewDate;
+    const Agent_AgentID = req.body.Agent_AgentID;
+    const properties_ProperyID = req.body.properties_ProperyID;
+    const properties_Review_ReviewID = req.body.properties_Review_ReviewID;
+    
+
+    const sqlInsert = `INSERT INTO Reviews (Rating, Comment, ReviewDate, Agent_AgentID, properties_ProperyID, properties_Review_ReviewID) VALUES (?, ?, ?, ?, ?, ?)`;
+    db.pool.query(sqlInsert, [Rating, Comment, ReviewDate, Agent_AgentID, properties_ProperyID, properties_Review_ReviewID], (error, result) => {});    
+    console.log(Rating, Comment, ReviewDate);
+    console.log(Rating, Comment, ReviewDate);
+    console.log(Agent_AgentID, properties_ProperyID, properties_Review_ReviewID);
+
+});
+
     
 
 /*

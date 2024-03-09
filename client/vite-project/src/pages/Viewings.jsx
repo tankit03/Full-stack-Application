@@ -43,7 +43,7 @@ function Viewings() {
             Comments: Comments,
             Agents_AgentID: Agents_AgentID,
             User_userID: User_userID,
-            Properties_propertyID: Properties
+            Properties_propertyID: Properties_propertyID
         });
 
         setViewingList([
@@ -56,6 +56,8 @@ function Viewings() {
                 User_userID: User_userID,
                 Properties_propertyID: Properties_propertyID
             },]);
+
+            console.log(ViewingList);
     };
 
     const deleteViewing = async (id) => {
@@ -112,10 +114,10 @@ function Viewings() {
                             <tr key={val.ViewingID}>
                                 <td>{val.ViewingID}</td>
                                 <td>{val.ViewingDate}</td>
-                                <td>{val.Comments}</td>
+                                <td>{val.Comment}</td>
                                 <td>{val.Agents_AgentID}</td>
-                                <td>{val.User_userID}</td>
-                                <td>{val.Properties_propertyID}</td>
+                                <td>{val.USER_UserID}</td>
+                                <td>{val.properties_ProperyID}</td>
                                 <td>
                                     <button onClick={() => deleteViewing(val.ViewingID)}>Delete</button>
                                     <input type="text" id="updateInput" onChange={(e) => {
@@ -135,10 +137,10 @@ function Viewings() {
             </div>
             <div className="form">
                 <h2>Create Viewing</h2>
-                <input type="text" id="ViewingDate" onChange={(e) => {
+                <input type="text" onChange={(e) => {
                     setViewingDate(e.target.value);
                 }} />
-                <input type="text" id="Comments" onChange={(e) => {
+                <input type="text" onChange={(e) => {
                     setComments(e.target.value);
                 }} />
                 <button onClick={createViewing}>Create Viewing</button>

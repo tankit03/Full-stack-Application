@@ -22,6 +22,7 @@ function Properties() {
     const [UniqueFeatures, setUniqueFeatures] = useState(" ")
     const [ListingDate, setListingDate] = useState(" ")
     const [AgentID, setAgentID] = useState(" ")
+    const[Review_ReviewID, setReview_ReviewID] = useState(" ")
     const [propertyList, setPropertyList] = useState([]);
 
     const [NewTitle, setNewTitle] = useState(" ")
@@ -77,7 +78,8 @@ function Properties() {
         RenovationDetails: RenovationDetails,
         UniqueFeatures: UniqueFeatures,
         ListingDate: ListingDate,
-        AgentID: AgentID
+        AgentID: AgentID,
+        Review_ReviewID: Review_ReviewID
       });
       setPropertyList([
         ...propertyList,
@@ -97,7 +99,10 @@ function Properties() {
           RenovationDetails: RenovationDetails,
           UniqueFeatures: UniqueFeatures,
           ListingDate: ListingDate,
-          AgentID: AgentID
+          AgentID: AgentID,
+          Review_ReviewID: Review_ReviewID
+
+
         },]);
     };
 
@@ -139,6 +144,7 @@ function Properties() {
                 <th>UniqueFeatures</th>
                 <th>ListingDate</th>
                 <th>AgentID</th>
+                <th>Review_ReviewID</th>
                 <th>Actions</th>
 
               </tr>
@@ -159,9 +165,11 @@ function Properties() {
                   <td>{val.SquareFeet}</td>
                   <td>{val.YearBuilt}</td>
                   <td>{val.RenovationDetails}</td>
-                  <td>{val.UniqueFeatures}</td>
+                  <td>{val.UniqueFeature}</td>
                   <td>{val.ListingDate}</td>
                   <td>{val.AgentID}</td>
+                  <td>{val.Review_ReviewID}</td>
+
                   <td>
                     <button onClick={() => {deleteProperty(val.ProperyID)}}>Delete</button>      
                  </td>
