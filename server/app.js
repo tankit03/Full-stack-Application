@@ -248,6 +248,136 @@ app.put('/api/users/update', (req, res) => {
     });
 });
 
+/* ---------------------------- For Feature ------------------------------------------------------------------------------------ */
+
+app.get('/api/feature/get', (req, res) => {
+    const sqlSelect = "SELECT * FROM Properties_Features";
+    db.pool.query(sqlSelect, (err, result) => {
+        console.log(result);
+        res.send(result);
+    });
+});
+
+app.post('/api/feature/insert', (req, res) => {
+
+    const FeatureID = req.body.FeatureID;
+    const Feature = req.body.Feature;
+
+    const sqlInsert = `INSERT INTO Properties_Features (FeatureID, Feature) VALUES (?, ?)`;
+    db.pool.query(sqlInsert, [FeatureID, Feature], (error, result) => {});
+
+});
+
+app.delete('/api/feature/delete/:FeatureID', (req, res) => {
+    const FeatureID = req.params.FeatureID;
+    
+    const sqlDelete = `DELETE FROM Properties_Features WHERE FeatureID = ?`;
+    
+    db.pool.query(sqlDelete, FeatureID, (error, result) => {
+        if (error) {
+            console.error(error);
+            res.status(500).send('An error occurred');
+        } else {
+            res.send(result);
+        }
+    });
+});
+
+app.put('/api/feature/update', (req, res) => {
+
+    const FeatureID = req.body.FeatureID;
+    const Feature = req.body.Feature;
+
+    const sqlUpdate = `UPDATE Properties_Features SET Feature = ? WHERE FeatureID = ?`;
+
+    db.pool.query(sqlUpdate, [Feature, FeatureID], (error, result) => {
+        if (error) {
+            console.error(error);
+            res.status(500).send('An error occurred');
+        } else {
+            const getFeatures = `SELECT * FROM Properties_Features`;
+            db.pool.query(getFeatures, (err, features) => {
+                if (err) {
+                    console.error(err);
+                    res.status(500).send('An error occurred');
+                }
+                else {
+                    res.send(features);
+                }
+            });
+        }
+    });
+});
+
+/* ---------------------------- For Viewings ------------------------------------------------------------------------------------ */
+
+app.get('/api/viewing/get', (req, res) => {
+
+    const sqlSelect = "SELECT * FROM Viewings";
+    db.pool.query(sqlSelect, (err, result) => {
+        console.log(result);
+        res.send(result);
+    });
+});
+
+app.post('/api/viewing/insert', (req, res) => {
+
+    const ViewingID = req.body.ViewingID;
+    const ViewingDate = req.body.ViewingDate;
+    const Comments = req.body.Comment;
+    
+
+    const sqlInsert = `INSERT INTO Viewings (ViewingDate, Comment,) VALUES (?, ?, ?)`;
+    db.pool.query(sqlInsert, [ViewingID, ViewingDate, Comments], (error, result) => {});
+
+});
+
+app.delete('/api/viewing/delete/:ViewingID', (req, res) => {
+    const ViewingID = req.params.ViewingID;
+    
+    const sqlDelete = `DELETE FROM Viewings WHERE ViewingID = ?`;
+    db.pool.query(sqlDelete, ViewingID, (error, result) => {
+        if (error) {
+            console.error(error);
+            res.status(500).send('An error occurred');
+        } else {
+            res.send(result);
+        }
+    });
+});
+
+app.put('/api/viewing/update', (req, res) => {
+    
+        const ViewingID = req.body.ViewingID;
+        const ViewingDate = req.body.ViewingDate;
+        const Comments = req.body.Comments;
+        const Agents_AgentID = req.body.Agents_AgentID;
+        const User_userID = req.body.User_UserID;
+        const Properties_propertyID = req.body.Properties_properyID;
+    
+        const sqlUpdate = `UPDATE Viewings SET ViewingDate = ?, Comment = ? WHERE ViewingID = ?`;
+
+        db.pool.query(sqlUpdate, [ViewingDate, Comments, ViewingID], (error, result) => {
+            if (error) {
+                console.error(error);
+                res.status(500).send('An error occurred');
+            } else {
+                const getViewings = `SELECT * FROM Viewings`;
+                db.pool.query(getViewings, (err, viewings) => {
+                    if (err) {
+                        console.error(err);
+                        res.status(500).send('An error occurred');
+                    }
+                    else {
+                        res.send(viewings);
+                    }
+                });
+            }
+        });
+});
+
+    
+
 /*
     LISTENER
 */
