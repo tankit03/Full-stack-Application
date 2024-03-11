@@ -7,6 +7,7 @@ import { Route, Routes } from "react-router-dom"
 
 function Review() {
 
+
     const [ReviewID, setReviewID] = useState("");
     const [Rating, setRating] = useState("");
     const [Comment, setComment] = useState("");
@@ -16,6 +17,13 @@ function Review() {
     const [properties_Review_ReviewID, setProperties_Review_ReviewID] = useState("");
     const [Users_UserID, setUser_UserID] = useState("");
     const [ReviewList, setReviewList] = useState([]);
+
+    const fetchReviews = async () => {
+        const response = await Axios.get('http://flip1.engr.oregonstate.edu:9125/api/review/get')
+        const data = response.data;
+        setReviewList(data);
+    
+    }
 
     useEffect(() => {
 
@@ -30,9 +38,10 @@ function Review() {
     
     }, []);
 
-    const CreateReview = () => {
+    const CreateReview = async () => {
             
-            const response =  Axios.post('http://flip1.engr.oregonstate.edu:9125/api/review/insert', {
+        try {
+            const response =  await Axios.post('http://flip1.engr.oregonstate.edu:9125/api/review/insert', {
                 ReviewID: ReviewID,
                 Rating: Rating,
                 Comment: Comment,
@@ -41,19 +50,15 @@ function Review() {
                 properties_ProperyID: properties_ProperyID,
                 properties_Review_ReviewID: properties_Review_ReviewID,
             });
-
-            setReviewList([
-                ...ReviewList,
-                {
-                    ReviewID: ReviewID,
-                    Rating: Rating,
-                    Comment: Comment,
-                    ReviewDate: ReviewDate,
-                    Agent_AgentID: Agent_AgentID,
-                    properties_ProperyID: properties_ProperyID,
-                    properties_Review_ReviewID: properties_Review_ReviewID,
-                },]);
-                console.log(ReviewList);
+            if (response.status === 201) {
+                await fetchReviews();
+            } else {
+                console.log(response);
+            }
+        } 
+        catch (error) {
+            console.error(error);
+        }      
     };
 
 

@@ -40,9 +40,10 @@ function User() {
 
     }, []);
 
-    const createUser = () => {
-            
-            Axios.post('http://flip1.engr.oregonstate.edu:9125/api/users/insert', {
+    const createUser = async () => {
+
+        try {
+            const response = await Axios.post('http://flip1.engr.oregonstate.edu:9125/api/users/insert', {
                 UserID: UserID,
                 firstName: firstName,
                 lastName: lastName,
@@ -51,21 +52,15 @@ function User() {
                 Budget: Budget,
                 PasswordHash: PasswordHash
             });
-
-            
-    
-            setUserList([
-                ...UserList,
-                {
-                    UserID: UserID,
-                    firstName: firstName,
-                    lastName: lastName,
-                    Email: Email,
-                    PhoneNumber: PhoneNumber,
-                    Budget: Budget,
-                    PasswordHash: PasswordHash
-                }
-            ]);
+            if (response.status === 201) {
+                await fetchUsers();
+            } else {
+                console.log(response);
+            }
+        }
+        catch (error) {
+            console.error(error);
+        }
     };
 
     const deleteUser = async (id) => {

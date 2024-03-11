@@ -35,29 +35,28 @@ function Viewings() {
         getViewings();
     }, []);
 
-    const createViewing = () => {
+    const createViewing = async () => {
 
-        Axios.post('http://flip1.engr.oregonstate.edu:9125/api/viewing/insert', {
-            ViewingID: ViewingID,
-            ViewingDate: ViewingDate,
-            Comments: Comments,
-            Agents_AgentID: Agents_AgentID,
-            User_userID: User_userID,
-            Properties_propertyID: Properties_propertyID
-        });
+        try {
 
-        setViewingList([
-            ...ViewingList,
-            {
+            const response = await Axios.post('http://flip1.engr.oregonstate.edu:9125/api/viewing/insert', {
                 ViewingID: ViewingID,
                 ViewingDate: ViewingDate,
                 Comments: Comments,
                 Agents_AgentID: Agents_AgentID,
                 User_userID: User_userID,
                 Properties_propertyID: Properties_propertyID
-            },]);
+            });
 
-            console.log(ViewingList);
+            if (response.status === 201) {
+                await fetchViewings();
+            }
+
+            
+        } catch (error) {
+            
+        }
+        
     };
 
     const deleteViewing = async (id) => {

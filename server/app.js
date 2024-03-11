@@ -55,7 +55,17 @@ app.get('/api/get', (req, res) => {
 
 
         const sqlInsert = `INSERT INTO Agents (firstName, lastName, Email, PhoneNumber, AgencyName, LicenseNumber) VALUES (?, ?, ?, ?, ?, ?)`;
-        db.pool.query(sqlInsert, [firstName, lastName, Email, PhoneNumber, AgencyName, LicenseNumber], (error, result) => {});
+        db.pool.query(sqlInsert, [firstName, lastName, Email, PhoneNumber, AgencyName, LicenseNumber], (error, result) => {
+
+            if (error) {
+                console.error("Error executing query:", error);
+                res.status(500).send("Error executing query");
+                return;
+            }
+            res.status(201).send("Agent inserted successfully");
+
+
+        });
 
     });
 
@@ -199,7 +209,15 @@ app.post('/api/users/insert', (req, res) => {
     const PasswordHash = req.body.PasswordHash;
 
     const sqlInsert = `INSERT INTO Users (UserID, firstName, lastName, Email, PhoneNumber, Budget, PasswordHash) VALUES (?, ?, ?, ?, ?, ?, ?)`;
-    db.pool.query(sqlInsert, [UserID, firstName, lastName, Email, PhoneNumber, Budget, PasswordHash], (error, result) => {});
+    db.pool.query(sqlInsert, [UserID, firstName, lastName, Email, PhoneNumber, Budget, PasswordHash], (error, result) => {
+
+        if (error) {
+            console.error("Error executing query:", error);
+            res.status(500).send("Error executing query");
+            return;
+        }
+        res.status(201).send("User inserted successfully");
+    });
 
 });
 
@@ -264,7 +282,15 @@ app.post('/api/feature/insert', (req, res) => {
     const Feature = req.body.Feature;
 
     const sqlInsert = `INSERT INTO Properties_Features (FeatureID, Feature) VALUES (?, ?)`;
-    db.pool.query(sqlInsert, [FeatureID, Feature], (error, result) => {});
+    db.pool.query(sqlInsert, [FeatureID, Feature], (error, result) => {
+            
+            if (error) {
+                console.error("Error executing query:", error);
+                res.status(500).send("Error executing query");
+                return;
+            }
+            res.status(201).send("Feature inserted successfully");
+    });
 
 });
 
@@ -322,13 +348,25 @@ app.get('/api/viewing/get', (req, res) => {
 
 app.post('/api/viewing/insert', (req, res) => {
 
-    const ViewingID = req.body.ViewingID;
+   
     const ViewingDate = req.body.ViewingDate;
-    const Comments = req.body.Comment;
+    const Comment = req.body.Comments;
+
+    console.log(req.body);
+    console.log(Comment);
     
 
-    const sqlInsert = `INSERT INTO Viewings (ViewingDate, Comment,) VALUES (?, ?, ?)`;
-    db.pool.query(sqlInsert, [ViewingID, ViewingDate, Comments], (error, result) => {});
+    const sqlInsert = `INSERT INTO Viewings (ViewingDate, Comment, properties_ProperyID, USER_UserID, Agents_AgentID) VALUES (?, ?, ?, ?, ?)`;
+    db.pool.query(sqlInsert, [ViewingDate, Comment, 3, 2, 8], (error, result) => {
+
+        if (error) {
+            console.error("Error executing query:", error);
+            res.status(500).send("Error executing query");
+            return;
+        }
+        res.status(201).send("Viewing inserted successfully");
+
+    });
 
 });
 
@@ -397,16 +435,19 @@ app.post('/api/review/insert', (req, res) => {
     const Rating = req.body.Rating;
     const Comment = req.body.Comment;
     const ReviewDate = req.body.ReviewDate;
-    const Agent_AgentID = req.body.Agent_AgentID;
-    const properties_ProperyID = req.body.properties_ProperyID;
-    const properties_Review_ReviewID = req.body.properties_Review_ReviewID;
+    
     
 
     const sqlInsert = `INSERT INTO Reviews (Rating, Comment, ReviewDate, Agent_AgentID, properties_ProperyID, properties_Review_ReviewID) VALUES (?, ?, ?, ?, ?, ?)`;
-    db.pool.query(sqlInsert, [Rating, Comment, ReviewDate, Agent_AgentID, properties_ProperyID, properties_Review_ReviewID], (error, result) => {});    
-    console.log(Rating, Comment, ReviewDate);
-    console.log(Rating, Comment, ReviewDate);
-    console.log(Agent_AgentID, properties_ProperyID, properties_Review_ReviewID);
+    db.pool.query(sqlInsert, [Rating, Comment, ReviewDate, 2, 2, 4], (error, result) => {
+        if(error){
+            console.error("Error executing query:", error);
+            res.status(500).send("Error executing query");
+            return;
+        }
+        res.status(201).send("Review inserted successfully");
+    });    
+    
 
 });
 

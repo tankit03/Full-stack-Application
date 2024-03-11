@@ -27,19 +27,23 @@ function PropertyFeature() {
         getFeatures();
     }, []);
 
-    const createFeature = () => {
-        Axios.post('http://flip1.engr.oregonstate.edu:9125/api/feature/insert', {
-            FeatureID: FeatureID,
-            Feature: Feature
-        });
-
-        setFeatureList([
-            ...Featurelist,
-            {
+    const createFeature = async () => {
+        try{
+            const response = await Axios.post('http://flip1.engr.oregonstate.edu:9125/api/feature/insert', {
                 FeatureID: FeatureID,
                 Feature: Feature
-            },]);
+            });
+            if (response.status === 201) {
+                await fetchFeatures();
+            } else {
+                console.log(response);
+            }
+        }
+        catch (error) {
+            console.error(error);
+        }
     };
+    
 
     const deleteFeature = async (id) => {
 

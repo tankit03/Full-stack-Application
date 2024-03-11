@@ -35,6 +35,7 @@ function App() {
     const getAgents = async () => {
       const response = await Axios.get('http://flip1.engr.oregonstate.edu:9125/api/get')
       const data = response.data;
+      console.log(data);
 
       setAgentList(data);
 
@@ -43,21 +44,10 @@ function App() {
 
   }, []);
 
-  const createAgent = () => {
+  const createAgent = async () => {
 
-    Axios.post('http://flip1.engr.oregonstate.edu:9125/api/insert', {
-      AgentID: AgentID,
-      firstName: firstName,
-      lastName: lastName,
-      Email: Email,
-      PhoneNumber: PhoneNumber,
-      AgencyName: AgencyName,
-      LicenseNumber: LicenseNumber
-    });
-
-    setAgentList([
-      ...agentList,
-      {
+    try {
+      const response = await Axios.post('http://flip1.engr.oregonstate.edu:9125/api/insert', {
         AgentID: AgentID,
         firstName: firstName,
         lastName: lastName,
@@ -65,7 +55,16 @@ function App() {
         PhoneNumber: PhoneNumber,
         AgencyName: AgencyName,
         LicenseNumber: LicenseNumber
-      },]);
+      });
+      if (response.status === 201) {
+        await fetchAgents();
+      } else {
+        console.log(response);
+      }
+    }
+    catch (error) {
+      console.error(error);
+    }
   };
 
   const deleteAgent = async (id) => {
