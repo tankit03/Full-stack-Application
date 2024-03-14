@@ -25,7 +25,7 @@ function App() {
 
 
   const fetchAgents = async () => {
-    const response = await Axios.get('http://flip1.engr.oregonstate.edu:9125/api/get')
+    const response = await Axios.get('http://flip1.engr.oregonstate.edu:9125/api/agents/get')
     const data = response.data;
     setAgentList(data);
 
@@ -33,7 +33,7 @@ function App() {
 
   useEffect(() => {
     const getAgents = async () => {
-      const response = await Axios.get('http://flip1.engr.oregonstate.edu:9125/api/get')
+      const response = await Axios.get('http://flip1.engr.oregonstate.edu:9125/api/agents/get')
       const data = response.data;
       console.log(data);
 

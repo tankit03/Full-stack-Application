@@ -152,6 +152,18 @@ body{
         font-family: 'Satoshi-bold';
     }
 
+    .dropdown {
+      font-family: 'Satoshi-regular', Arial;
+      color: #000000;
+      background-color: #F0EDCF;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      margin: 10px 0;
+      width: 100%;
+      max-width: 300px;
+    }
+
     
 
 

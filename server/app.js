@@ -20,7 +20,7 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/api/get', (req, res) => {
+app.get('/api/agents/get', (req, res) => {
     const sqlSelect = "SELECT * FROM Agents";
     db.pool.query(sqlSelect, (err, result) => {
         console.log(result);
@@ -131,7 +131,7 @@ app.get('/api/properties/get', (req, res) => {
             console.error(err);
             res.status(500).send('An error occurred while fetching properties');
         } else {
-            console.log(result);
+            console.log("properties",result);
             res.send(result);
             
         }
@@ -156,9 +156,11 @@ app.post('/api/properties/insert', (req, res) => {
     const ListingDate = req.body.ListingDate;
     const AgentID = req.body.AgentID;
 
+    
+    const sqlInsert = `INSERT INTO properties (Title, City, State, Zipcode, Price, Description, PropertyType, Bedroom, Bathroom, SquareFeet, YearBuilt, RenovationDetails, UniqueFeatures, ListingDate, AgentID) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
     db.pool.query(sqlInsert, [Title, City, State, Zipcode, Price, Description, PropertyType, Bedroom, Bathroom, SquareFeet, YearBuilt, RenovationDetails, UniqueFeatures, ListingDate, AgentID], (error, results) => {
         if (error) {
-            console.error("Error executing query:", error);
+            console.error("Error executing query# Find the process ID (PID)", error);
             res.status(500).send("Error executing query");
             return;
         }
@@ -168,9 +170,9 @@ app.post('/api/properties/insert', (req, res) => {
 
 app.delete('/api/properties/delete/:PropertyID', (req, res) => {
 
-    const ProperyID = req.params.ProperyID;
+    const ProperyID = req.params.PropertyID;
     
-    const sqlDelete = `DELETE FROM properties WHERE ProperyID = ?`;
+    const sqlDelete = `DELETE FROM properties WHERE PropertyID = ?`;
     db.pool.query(sqlDelete, ProperyID, (error, result) => {
         if (error) {
             console.error(error);
@@ -356,7 +358,7 @@ app.post('/api/viewing/insert', (req, res) => {
     console.log(Comment);
     
 
-    const sqlInsert = `INSERT INTO Viewings (ViewingDate, Comment, properties_ProperyID, USER_UserID, Agents_AgentID) VALUES (?, ?, ?, ?, ?)`;
+    const sqlInsert = `INSERT INTO Viewings (ViewingDate, Comment, properties_PropertyID, USER_UserID, Agents_AgentID) VALUES (?, ?, ?, ?, ?)`;
     db.pool.query(sqlInsert, [ViewingDate, Comment, 3, 2, 8], (error, result) => {
 
         if (error) {
@@ -430,6 +432,20 @@ app.get('/api/review/get', (req, res) => {
     });
 });
 
+app.delete('/api/review/delete/:ReviewID', (req, res) => {
+    const ReviewID = req.params.ReviewID;
+    
+    const sqlDelete = `DELETE FROM Reviews WHERE ReviewID = ?`;
+    db.pool.query(sqlDelete, ReviewID, (error, result) => {
+        if (error) {
+            console.error(error);
+            res.status(500).send('An error occurred');
+        } else {
+            res.send(result);
+        }
+    });
+});
+
 app.post('/api/review/insert', (req, res) => {
 
     const Rating = req.body.Rating;
@@ -438,7 +454,7 @@ app.post('/api/review/insert', (req, res) => {
     
     
 
-    const sqlInsert = `INSERT INTO Reviews (Rating, Comment, ReviewDate, Agent_AgentID, properties_ProperyID, properties_Review_ReviewID) VALUES (?, ?, ?, ?, ?, ?)`;
+    const sqlInsert = `INSERT INTO Reviews (Rating, Comment, ReviewDate, Agent_AgentID, properties_PropertyID, properties_Review_ReviewID) VALUES (?, ?, ?, ?, ?, ?)`;
     db.pool.query(sqlInsert, [Rating, Comment, ReviewDate, 2, 2, 4], (error, result) => {
         if(error){
             console.error("Error executing query:", error);

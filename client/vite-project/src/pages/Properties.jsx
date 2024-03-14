@@ -4,120 +4,120 @@ import { Route, Routes } from 'react-router-dom'
 
 
 function Properties() {
-
-
-    const [ProperyID, setProperyID] = useState(" ")
-    const [Title, setTitle] = useState(" ")
-    const [City, setCity] = useState(" ")
-    const [State, setState] = useState(" ")
-    const [Zipcode, setZipcode] = useState(" ")
-    const [Price, setPrice] = useState(" ")
-    const [Description, setDescription] = useState(" ")
-    const [PropertyType, setPropertyType] = useState(" ")
-    const [Bedroom, setBedroom] = useState(" ")
-    const [Bathroom, setBathroom] = useState(" ")
-    const [SquareFeet, setSquareFeet] = useState(" ")
-    const [YearBuilt, setYearBuilt] = useState(" ")
-    const [RenovationDetails, setRenovationDetails] = useState(" ")
-    const [UniqueFeatures, setUniqueFeatures] = useState(" ")
-    const [ListingDate, setListingDate] = useState(" ")
-    const [AgentID, setAgentID] = useState(" ")
-    const[Review_ReviewID, setReview_ReviewID] = useState(" ")
+  
     const [propertyList, setPropertyList] = useState([]);
+    const [AgentList, setAgentList] = useState([]);
+    const [ReviewList, setReviewList] = useState([]);
 
-    const [NewTitle, setNewTitle] = useState(" ")
-    const [NewCity, setNewCity] = useState(" ")
-    const [NewState, setNewState] = useState(" ")
-    const [NewZipcode, setNewZipcode] = useState(" ")
-    const [NewPrice, setNewPrice] = useState(" ")
-    const [NewDescription, setNewDescription] = useState(" ")
-    const [NewPropertyType, setNewPropertyType] = useState(" ")
-    const [NewBedroom, setNewBedroom] = useState(" ")
-    const [NewBathroom, setNewBathroom] = useState(" ")
-    const [NewSquareFeet, setNewSquareFeet] = useState(" ")
-    const [NewYearBuilt, setNewYearBuilt] = useState(" ")
-    const [NewRenovationDetails, setNewRenovationDetails] = useState(" ")
-    const [NewUniqueFeatures, setNewUniqueFeatures] = useState(" ")
-    const [NewListingDate, setNewListingDate] = useState(" ")
+    const [newPropertyId, setNewPropertyId] = useState("");
+    const [newTitle, setNewTitle] = useState("");
+    const [newCity, setNewCity] = useState("");
+    const [newState, setNewState] = useState("");
+    const [newZipcode, setNewZipcode] = useState("");
+    const [newPrice, setNewPrice] = useState("");
+    const [newDescription, setNewDescription] = useState("");
+    const [newPropertyType, setNewPropertyType] = useState("");
+    const [newBedroom, setNewBedroom] = useState(""); 
+    const [newBathroom, setNewBathroom] = useState("");
+    const [newSquareFeet, setNewSquareFeet] = useState("");
+    const [newYearBuilt, setNewYearBuilt] = useState("");
+    const [newRenovationDetails, setNewRenovationDetails] = useState("");
+    const [newUniqueFeatures, setNewUniqueFeatures] = useState("");
+    const [newListingDate, setNewListingDate] = useState("");
+    const [newAgentID, setNewAgentID] = useState("");
+    const [newReview_ReviewID, setNewReview_ReviewID] = useState("");
+
+    const url = {
+        properties: 'http://flip1.engr.oregonstate.edu:9125/api/properties/get',
+        agents: 'http://flip1.engr.oregonstate.edu:9125/api/agents/get',
+        reviews: 'http://flip1.engr.oregonstate.edu:9125/api/review/get'
+    };
     
 
-    const fetchProperties = async () => {
-        const response = await Axios.get('http://flip1.engr.oregonstate.edu:9125/api/properties/get')
-        const data = response.data;
-        setPropertyList(data);
-
-    }
-
-    useEffect(() => {
-        const getProperties = async () => {
-            const response = await Axios.get('http://flip1.engr.oregonstate.edu:9125/api/properties/get')
-            const data = response.data;
-
-            setPropertyList(data);
-
-        }
-        getProperties();
-
-    }, []);
-
-    const createProperty = () => {
-
-      Axios.post('http://flip1.engr.oregonstate.edu:9125/api/properties/insert', {
-        ProperyID: ProperyID,
-        Title: Title,
-        City: City,
-        State: State,
-        Zipcode: Zipcode,
-        Price: Price,
-        Description: Description,
-        PropertyType: PropertyType,
-        Bedroom: Bedroom,
-        Bathroom: Bathroom,
-        SquareFeet: SquareFeet,
-        YearBuilt: YearBuilt,
-        RenovationDetails: RenovationDetails,
-        UniqueFeatures: UniqueFeatures,
-        ListingDate: ListingDate,
-        AgentID: AgentID,
-        Review_ReviewID: Review_ReviewID
-      });
-      setPropertyList([
-        ...propertyList,
-        {
-          ProperyID: ProperyID,
-          Title: Title,
-          City: City,
-          State: State,
-          Zipcode: Zipcode,
-          Price: Price,
-          Description: Description,
-          PropertyType: PropertyType,
-          Bedroom: Bedroom,
-          Bathroom: Bathroom,
-          SquareFeet: SquareFeet,
-          YearBuilt: YearBuilt,
-          RenovationDetails: RenovationDetails,
-          UniqueFeatures: UniqueFeatures,
-          ListingDate: ListingDate,
-          AgentID: AgentID,
-          Review_ReviewID: Review_ReviewID
-
-
-        },]);
+    const fetchProperties = async (url) => {
+      try{
+        const response = await Axios.get(url)
+        return response.data;
+      } catch (error){
+        console.error(`Failed to fetch from ${url}:`, error);
+        return [];
+      }
     };
 
-    const deleteProperty = async (id) => {
-        
-          try {
+    const fetchAllData = async () => {
+      try {
+        const [propertiesData, agentsData, reviewsData] = await Promise.all([
+          fetchProperties(url.properties),
+          fetchProperties(url.agents),
+          fetchProperties(url.reviews)
+        ]);
+
+        setPropertyList(propertiesData);
+        setAgentList(agentsData);
+        setReviewList(reviewsData);
+        console.log("propertiesData: ", propertiesData);
+      } catch (error) {
+        console.error('Failed to fetch all data:', error);
+      }
+    };
+
+    useEffect(() => {
+      fetchAllData();
+    }, []);
+
+
   
-              const response = await Axios.delete(`http://flip1.engr.oregonstate.edu:9125/api/properties/delete/${id}`);
-              console.log(response);
-              await fetchProperties();
+
+    // const fetchProperties = async () => {
+    //     const response = await Axios.get('http://flip1.engr.oregonstate.edu:9125/api/properties/get')
+    //     const data = response.data;
+    //     setPropertyList(data);
+
+    // }
+
+    // useEffect(() => {
+    //     const getProperties = async () => {
+    //         const response = await Axios.get('http://flip1.engr.oregonstate.edu:9125/api/properties/get')
+    //         const data = response.data;
+
+    //         setPropertyList(data);
+
+    //     }
+    //     getProperties();
+
+    // }, []);
+
+    const createProperty = async () => {
+      console.log("back-end data: ",newPropertyId, newTitle, newCity, newState, newZipcode, newPrice, newDescription, newPropertyType, newBedroom, newBathroom, newSquareFeet, newYearBuilt, newRenovationDetails, newUniqueFeatures, newListingDate, newAgentID, newReview_ReviewID);
+      try {
+          const response = await Axios.post('http://flip1.engr.oregonstate.edu:9125/api/properties/insert', {
+              PropertyID: newPropertyId,
+              Title: newTitle,
+              City: newCity,
+              State: newState,
+              Zipcode: newZipcode,
+              Price: newPrice,
+              Description: newDescription,
+              PropertyType: newPropertyType,
+              Bedroom: newBedroom,
+              Bathroom: newBathroom,
+              SquareFeet: newSquareFeet,
+              YearBuilt: newYearBuilt,
+              RenovationDetails: newRenovationDetails,
+              UniqueFeature: newUniqueFeatures,
+              ListingDate: newListingDate,
+              AgentID: newAgentID,
+              Review_ReviewID: newReview_ReviewID
+          });
+
+          if (response.status === 201) {
+            await fetchAllData(); // Fetch all data again to refresh the list
+          }
           } catch (error) {
               console.error(error);
-
           }
-    }
+      };
+
 
         
     return (
@@ -128,7 +128,7 @@ function Properties() {
           <table>
             <thead>
               <tr>
-                <th>ProperyID</th>
+                <th>Property ID</th>
                 <th>Title</th>
                 <th>City</th>
                 <th>State</th>
@@ -151,8 +151,8 @@ function Properties() {
             </thead>
             <tbody>
               {propertyList.map((val) => (
-                <tr key={val.ProperyID}>
-                  <td>{val.ProperyID}</td>
+                <tr key={val.PropertyID}>
+                  <td>{val.PropertyID}</td>
                   <td>{val.Title}</td>
                   <td>{val.City}</td>
                   <td>{val.State}</td>
@@ -251,6 +251,6 @@ function Properties() {
         </div>
       </div>
     )
-}
+  }
 
 export default Properties

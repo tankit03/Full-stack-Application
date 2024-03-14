@@ -5,36 +5,64 @@ import { Route, Routes } from "react-router-dom"
 
 
 
+
 function Review() {
 
+    const [reviewList, setReviewList] = useState([]);
+    const [agentList, setAgentList] = useState([]);
+    const [propertyList, setPropertyList] = useState([]);
+    const [userList, setUserList] = useState([]);
 
-    const [ReviewID, setReviewID] = useState("");
-    const [Rating, setRating] = useState("");
-    const [Comment, setComment] = useState("");
-    const [ReviewDate, setReviewDate] = useState("");
-    const [Agent_AgentID, setAgent_AgentID] = useState("");
-    const [properties_ProperyID, setProperties_ProperyID] = useState("");
-    const [properties_Review_ReviewID, setProperties_Review_ReviewID] = useState("");
-    const [Users_UserID, setUser_UserID] = useState("");
-    const [ReviewList, setReviewList] = useState([]);
+    //new viewings state hooks
 
-    const fetchReviews = async () => {
-        const response = await Axios.get('http://flip1.engr.oregonstate.edu:9125/api/review/get')
-        const data = response.data;
-        setReviewList(data);
+    const [newReviewID, setnewReviewID] = useState("");
+    const [newRating, setnewRating] = useState("");
+    const [newComment, setnewComment] = useState("");
+    const [newReviewDate, setnewReviewDate] = useState("");
+    const [newAgentId, setnewAgentId] = useState("");
+    const [newPropertyId, setnewPropertyId] = useState("");
+    const [newpropertiesReviewReviewID, setnewpropertiesReviewReviewID] = useState("");
+    const [newUserId, setnewUserId] = useState("");
+
     
+    const urls = {
+        reviews: 'http://flip1.engr.oregonstate.edu:9125/api/review/get',
+        agents: 'http://flip1.engr.oregonstate.edu:9125/api/agents/get',
+        properties: 'http://flip1.engr.oregonstate.edu:9125/api/properties/get',
+        users: 'http://flip1.engr.oregonstate.edu:9125/api/users/get'
+    };
+
+    const fetchData = async (url) => {
+        try{
+            const response = await Axios.get(url);
+            return response.data;
+        } catch (error){
+            console.error(`Failed to fetch from ${url}:`, error);
+            return [];
+        }
     }
+
+    const fetchAllData = async () => {
+        try {
+            const [reviewsData, agentsData, propertiesData, usersData] = await Promise.all([
+                fetchData(urls.reviews),
+                fetchData(urls.agents),
+                fetchData(urls.properties),
+                fetchData(urls.users)
+            ]);
+
+            setReviewList(reviewsData);
+            setAgentList(agentsData);
+            setPropertyList(propertiesData);
+            setUserList(usersData);
+        } catch (error) {
+            console.error('Failed to fetch all data:', error);
+        }
+    };
 
     useEffect(() => {
 
-        const getReviews = async () => {
-            const response = await Axios.get('http://flip1.engr.oregonstate.edu:9125/api/review/get')
-            const data = response.data;
-            
-            setReviewList(data);
-            console.log(data);
-        }
-        getReviews();
+        fetchAllData();
     
     }, []);
 
@@ -42,16 +70,17 @@ function Review() {
             
         try {
             const response =  await Axios.post('http://flip1.engr.oregonstate.edu:9125/api/review/insert', {
-                ReviewID: ReviewID,
-                Rating: Rating,
-                Comment: Comment,
-                ReviewDate: ReviewDate,
-                Agent_AgentID: Agent_AgentID,
-                properties_ProperyID: properties_ProperyID,
-                properties_Review_ReviewID: properties_Review_ReviewID,
+                ReviewID: newReviewID,
+                Rating: newRating,
+                Comment: newComment,
+                ReviewDate: newReviewDate,
+                Agent_AgentID: newAgentId,
+                properties_ProperyID: newPropertyId,
+                properties_Review_ReviewID: newpropertiesReviewReviewID,
+                Users_UserID: newUserId
             });
             if (response.status === 201) {
-                await fetchReviews();
+                await fetchAllData();
             } else {
                 console.log(response);
             }
@@ -59,6 +88,35 @@ function Review() {
         catch (error) {
             console.error(error);
         }      
+    };
+
+    const deleteReview = async (id) => {
+        try {
+            const response = await Axios.delete(`http://flip1.engr.oregonstate.edu:9125/api/review/delete/${id}`);
+            console.log(response);
+            await fetchAllData();
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const updateReview = async (id) => {
+        try{
+            const response = await Axios.put(`http://flip1.engr.oregonstate.edu:9125/api/review/update`, {
+                ReviewID: newReviewID,
+                Rating: newRating,
+                Comment: newComment,
+                ReviewDate: newReviewDate,
+                Agent_AgentID: newAgentId,
+                properties_ProperyID: newPropertyId,
+                properties_Review_ReviewID: newpropertiesReviewReviewID,
+                Users_UserID: newUserId
+            });
+            console.log(response);
+            await fetchAllData();
+        } catch (error) {
+            console.error(error);
+        }
     };
 
 
@@ -74,24 +132,29 @@ function Review() {
                         <th>Rating</th>
                         <th>Comment</th>
                         <th>ReviewDate</th>
-                        <th>Agent_AgentID</th>
-                        <th>properties_ProperyID</th>
+                        <th>Agent ID</th>
+                        <th>Property ID</th>
                         <th>properties_Review_ReviewID</th>
-                        <th>User_UserID</th>
+                        <th>User ID</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
 
-                  {ReviewList.map((val) => (
+                  {reviewList.map((val) => (
                     <tr key={val.ReviewID}>
                         <td>{val.ReviewID}</td>
                         <td>{val.Rating}</td>
                         <td>{val.Comment}</td>
                         <td>{val.ReviewDate}</td>
                         <td>{val.Agent_AgentID}</td>
-                        <td>{val.properties_ProperyID}</td>
+                        <td>{val.properties_PropertyID}</td>
                         <td>{val.properties_Review_ReviewID}</td>
                         <td>{val.Users_UserID}</td> 
+                        <td>
+                            <button onClick={() => deleteReview(val.ReviewID)}>Delete</button>
+                            <button onClick={() => updateReview(val.ReviewID)}>Update</button>
+                        </td>
                     </tr>
                   ))}
                 </tbody>
@@ -100,15 +163,15 @@ function Review() {
             <div className="form">
                 <label>Create rating</label>
                 <input type="text" onChange={(e) => {
-                    setRating(e.target.value);
+                    setnewRating(e.target.value);
                 }} />
                 <label>Create Comment</label>
                 <input type="text" onChange={(e) => {
-                    setComment(e.target.value);
+                    setnewComment(e.target.value);
                 }} />
                 <label>Create ReviewDate</label>
                 <input type="text" onChange={(e) => {
-                    setReviewDate(e.target.value);
+                    setnewReviewDate(e.target.value);
                 }} />
             
                 <button onClick={CreateReview}>Create Review</button>
