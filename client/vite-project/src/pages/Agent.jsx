@@ -170,33 +170,33 @@ function App() {
             </tbody>
           </table>
         </div>
-        <div className="form">
+        <form className="form" onSubmit={(e) => e.preventDefault()}>
           <label>First Name:</label>
-          <input type="text" onChange={(e) => {
+          <input type="text" placeholder="First name" onChange={(e) => {
             setfirstName(e.target.value)
           }} />
           <label>Last Name:</label>
-          <input type="text" onChange={(e) => {
+          <input type="text" placeholder="Last name" onChange={(e) => {
             setlastName(e.target.value)
           }} />
           <label>Email:</label>
-          <input type="text" onChange={(e) => {
+          <input type="text" placeholder="Type email: Ex hello@gamil.com" onChange={(e) => {
             setEmail(e.target.value)
           }} />
           <label>Phone Number:</label>
-          <input type="text" onChange={(e) => {
+          <input type="text" placeholder="Type Phone Number: (xxx)-xxx-xxxx" onChange={(e) => {
             setPhoneNumber(e.target.value)
           }} />
           <label>Agency Name:</label>
-          <input type="text" onChange={(e) => {
+          <input type="text" placeholder="Add your Agency Name" onChange={(e) => {
             setAgencyName(e.target.value)
           }} />
           <label>License Number:</label>
-          <input type="text" onChange={(e) => {
+          <input type="text" placeholder="Add your License number" onChange={(e) => {
             setLicenseNumber(e.target.value)
           }} />
           <button onClick={createAgent}>Submit</button>
-        </div>
+        </form>
       </div>
     </>
   )

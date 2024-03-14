@@ -55,7 +55,6 @@ function Properties() {
         setPropertyList(propertiesData);
         setAgentList(agentsData);
         setReviewList(reviewsData);
-        console.log("propertiesData: ", propertiesData);
       } catch (error) {
         console.error('Failed to fetch all data:', error);
       }
@@ -64,28 +63,6 @@ function Properties() {
     useEffect(() => {
       fetchAllData();
     }, []);
-
-
-  
-
-    // const fetchProperties = async () => {
-    //     const response = await Axios.get('http://flip1.engr.oregonstate.edu:9125/api/properties/get')
-    //     const data = response.data;
-    //     setPropertyList(data);
-
-    // }
-
-    // useEffect(() => {
-    //     const getProperties = async () => {
-    //         const response = await Axios.get('http://flip1.engr.oregonstate.edu:9125/api/properties/get')
-    //         const data = response.data;
-
-    //         setPropertyList(data);
-
-    //     }
-    //     getProperties();
-
-    // }, []);
 
     const createProperty = async () => {
       console.log("back-end data: ",newPropertyId, newTitle, newCity, newState, newZipcode, newPrice, newDescription, newPropertyType, newBedroom, newBathroom, newSquareFeet, newYearBuilt, newRenovationDetails, newUniqueFeatures, newListingDate, newAgentID, newReview_ReviewID);
@@ -116,6 +93,16 @@ function Properties() {
           } catch (error) {
               console.error(error);
           }
+      };
+
+      const deleteProperty = async (id) => {
+        try {
+          await Axios.delete(`http://flip1.engr.oregonstate.edu:9125/api/properties/delete/${id}`);
+          await fetchAllData(); // Fetch all data again to refresh the list
+          
+        } catch (error) {
+          console.error(error);
+        }
       };
 
 
@@ -171,84 +158,84 @@ function Properties() {
                   <td>{val.Review_ReviewID}</td>
 
                   <td>
-                    <button onClick={() => {deleteProperty(val.ProperyID)}}>Delete</button>      
+                    <button onClick={() => {deleteProperty(val.PropertyID)}}>Delete</button>      
                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <div className="form">
+        <form className="form" onSubmit={(e) => e.preventDefault()}>
           <label>Title:</label>
-          <input type="text" onChange={(e) => {
-            setTitle(e.target.value)
+          <input type="text" placeholder="Title" onChange={(e) => {
+            setNewTitle(e.target.value)
           }} />
           <label>City:</label>
-          <input type="text" onChange={(e) => {
-            setCity(e.target.value)
+          <input type="text" placeholder="City" onChange={(e) => {
+            setNewCity(e.target.value)
           }} />
           <label>State:</label>
-          <input type="text" onChange={(e) => {
-            setState(e.target.value)
+          <input type="text" placeholder="State, Ex: NY, OR" onChange={(e) => {
+            setNewState(e.target.value)
           }
           } />
           <label>Zipcode:</label>
-          <input type="text" onChange={(e) => {
-            setZipcode(e.target.value)
+          <input type="text" placeholder="Zipcode, Ex: 97229" onChange={(e) => {
+            setNewZipcode(e.target.value)
           }
           } />
           <label>Price:</label>
-          <input type="text" onChange={(e) => {
-            setPrice(e.target.value)
+          <input type="text" placeholder="Price, Ex: 120,000" onChange={(e) => {
+            setNewPrice(e.target.value)
           }
           } />
           <label>Description:</label>
-          <input type="text" onChange={(e) => {
-            setDescription(e.target.value)
+          <input type="text" placeholder="Description of property" onChange={(e) => {
+            setNewDescription(e.target.value)
           }
           } />
           <label>PropertyType:</label>
-          <input type="text" onChange={(e) => {
-            setPropertyType(e.target.value)
+          <input type="text" placeholder="Property Type, Ex: Apartment or Villa" onChange={(e) => {
+            setNewPropertyType(e.target.value)
           }
           } />
           <label>Bedroom:</label>
-          <input type="text" onChange={(e) => {
-            setBedroom(e.target.value)
+          <input type="text" placeholder="Bedrooms in the property" onChange={(e) => {
+            setNewBedroom(e.target.value)
           }
           } />
           <label>Bathroom:</label>
-          <input type="text" onChange={(e) => {
-            setBathroom(e.target.value)
+          <input type="text" placeholder="Bathrooms in the property" onChange={(e) => {
+            setNewBathroom(e.target.value)
           }
           } />
           <label>SquareFeet:</label>
-          <input type="text" onChange={(e) => {
-            setSquareFeet(e.target.value)
+          <input type="text" placeholder="SquareFeet of the property" onChange={(e) => {
+            setNewSquareFeet(e.target.value)
           }
           } />
           <label>YearBuilt:</label>
-          <input type="text" onChange={(e) => {
-            setYearBuilt(e.target.value)
+          <input type="text" placeholder="Year built, Ex: 2012" onChange={(e) => {
+            setNewYearBuilt(e.target.value)
           }
           } />
           <label>RenovationDetails:</label>
-          <input type="text" onChange={(e) => {
-            setRenovationDetails(e.target.value)
+          <input type="text" placeholder="Renovation details, Ex: New Roof (2016) " onChange={(e) => {
+            setNewRenovationDetails(e.target.value)
           }
           } />
           <label>UniqueFeatures:</label>
-          <input type="text" onChange={(e) => {
-            setUniqueFeatures(e.target.value)
+          <input type="text" placeholder="Unique feature of the property, Ex: Secert Roof" onChange={(e) => {
+            setNewUniqueFeatures(e.target.value)
           }
           } />
           <label>ListingDate:</label>
-          <input type="text" onChange={(e) => {
-            setListingDate(e.target.value)
+          <input type="text" placeholder="The Listing date, 2024-02-15T08:00:00.000Z " onChange={(e) => {
+            setNewListingDate(e.target.value)
           }
           } />
           <button onClick={createProperty}>Submit</button>
-        </div>
+        </form>
       </div>
     )
   }

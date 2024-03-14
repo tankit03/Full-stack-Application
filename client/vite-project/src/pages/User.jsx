@@ -124,27 +124,27 @@ function User() {
                                 <td>{val.PasswordHash}</td>
                                 <td>
                                     <button onClick={() => deleteUser(val.UserID)}>Delete</button>
-                                    <input type="text" id="updateInput" onChange={(e) => {
+                                    <input type="text" id="updateInput" placeholder="First name" onChange={(e) => {
                                         setNewFirstUserName(e.target.value)
                                     }
                                     } />
-                                    <input type="text" id="updateInput" onChange={(e) => {
+                                    <input type="text" id="updateInput" placeholder="Last name" onChange={(e) => {
                                         setNewLastUserName(e.target.value)
                                     }
                                     } />
-                                    <input type="text" id="updateInput" onChange={(e) => {
+                                    <input type="text" id="updateInput" placeholder="Type email: Ex hello@gamil.com" onChange={(e) => {
                                         setNewUserEmail(e.target.value)
                                     }
                                     } />
-                                    <input type="text" id="updateInput" onChange={(e) => {
+                                    <input type="text" id="updateInput" placeholder="Type Phone Number: (xxx)-xxx-xxxx" onChange={(e) => {
                                         setNewUserPhone(e.target.value)
                                     }
                                     } />
-                                    <input type="text" id="updateInput" onChange={(e) => {
+                                    <input type="text" id="updateInput" placeholder="Input New budget value: 90000" onChange={(e) => {
                                         setNewUserBudget(e.target.value)
                                     }
                                     } />
-                                    <input type="text" id="updateInput" onChange={(e) => {
+                                    <input type="text" id="updateInput" placeholder="Input password hash" onChange={(e) => {
                                         setNewUserPassword(e.target.value)
                                     }
                                     } />
@@ -157,27 +157,27 @@ function User() {
                 <div className="form">
                     <label>User ID:</label>
                     <label>First Name:</label>
-                    <input type="text" onChange={(e) => {
+                    <input type="text" placeholder="First name" onChange={(e) => {
                         setfirstName(e.target.value)
                     }} />
                     <label>Last Name:</label>
-                    <input type="text" onChange={(e) => {
+                    <input type="text" placeholder="Last name" onChange={(e) => {
                         setlastName(e.target.value)
                     }} />
                     <label>Email:</label>
-                    <input type="text" onChange={(e) => {
+                    <input type="text" placeholder="Type email: Ex hello@gamil.com" onChange={(e) => {
                         setEmail(e.target.value)
                     }} />
                     <label>Phone Number:</label>
-                    <input type="text" onChange={(e) => {
+                    <input type="text" placeholder="Type Phone Number: (xxx)-xxx-xxxx" onChange={(e) => {
                         setPhoneNumber(e.target.value)
                     }} />
                     <label>Budget:</label>
-                    <input type="text" onChange={(e) => {
+                    <input type="text" placeholder="Input New budget value: 90000" onChange={(e) => {
                         setBudget(e.target.value)
                     }} />
                     <label>Password Hash:</label>
-                    <input type="text" onChange={(e) => {
+                    <input type="text" placeholder="Input password hash" onChange={(e) => {
                         setPasswordHash(e.target.value)
                     }} />
                     <button onClick={createUser}>Create User</button>

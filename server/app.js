@@ -152,13 +152,13 @@ app.post('/api/properties/insert', (req, res) => {
     const SquareFeet = req.body.SquareFeet;
     const YearBuilt = req.body.YearBuilt;
     const RenovationDetails = req.body.RenovationDetails;
-    const UniqueFeatures = req.body.UniqueFeatures;
+    const UniqueFeature = req.body.UniqueFeature;
     const ListingDate = req.body.ListingDate;
     const AgentID = req.body.AgentID;
 
     
-    const sqlInsert = `INSERT INTO properties (Title, City, State, Zipcode, Price, Description, PropertyType, Bedroom, Bathroom, SquareFeet, YearBuilt, RenovationDetails, UniqueFeatures, ListingDate, AgentID) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
-    db.pool.query(sqlInsert, [Title, City, State, Zipcode, Price, Description, PropertyType, Bedroom, Bathroom, SquareFeet, YearBuilt, RenovationDetails, UniqueFeatures, ListingDate, AgentID], (error, results) => {
+    const sqlInsert = `INSERT INTO properties (Title, City, State, Zipcode, Price, Description, PropertyType, Bedroom, Bathroom, SquareFeet, YearBuilt, RenovationDetails, UniqueFeature, ListingDate, AgentID) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+    db.pool.query(sqlInsert, [Title, City, State, Zipcode, Price, Description, PropertyType, Bedroom, Bathroom, SquareFeet, YearBuilt, RenovationDetails, UniqueFeature, ListingDate, AgentID], (error, results) => {
         if (error) {
             console.error("Error executing query# Find the process ID (PID)", error);
             res.status(500).send("Error executing query");
@@ -353,13 +353,17 @@ app.post('/api/viewing/insert', (req, res) => {
    
     const ViewingDate = req.body.ViewingDate;
     const Comment = req.body.Comments;
+    const propertiesID = req.body.properties_PropertyID;
+    const userID = req.body.USER_UserID;
+    const agentID = req.body.Agents_AgentID;
+
 
     console.log(req.body);
     console.log(Comment);
     
 
     const sqlInsert = `INSERT INTO Viewings (ViewingDate, Comment, properties_PropertyID, USER_UserID, Agents_AgentID) VALUES (?, ?, ?, ?, ?)`;
-    db.pool.query(sqlInsert, [ViewingDate, Comment, 3, 2, 8], (error, result) => {
+    db.pool.query(sqlInsert, [ViewingDate, Comment, 1, 2, 3], (error, result) => {
 
         if (error) {
             console.error("Error executing query:", error);

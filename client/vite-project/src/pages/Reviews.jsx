@@ -160,22 +160,50 @@ function Review() {
                 </tbody>
                 </table> 
             </div>
-            <div className="form">
+            <form className="form" onSubmit={(e) => e.preventDefault()}>
                 <label>Create rating</label>
-                <input type="text" onChange={(e) => {
+                <input type="text" placeholder="Rating, Ex: 4,5 or 8" onChange={(e) => {
                     setnewRating(e.target.value);
                 }} />
                 <label>Create Comment</label>
-                <input type="text" onChange={(e) => {
+                <input type="text" placeholder="Type comment" onChange={(e) => {
                     setnewComment(e.target.value);
                 }} />
                 <label>Create ReviewDate</label>
-                <input type="text" onChange={(e) => {
+                <input type="text" placeholder="Type Date, Ex: 2024" onChange={(e) => {
                     setnewReviewDate(e.target.value);
                 }} />
+
+                <select className="dropdown" onChange={(e) => setnewAgentId(e.target.value)}>
+                    <option value="">Select Agent</option>
+                    {agentList.map((agent) => (
+                        <option key={agent.AgentID} value={agent.AgentID}>
+                            {agent.firstName} {agent.lastName}
+                        </option>
+                    ))}
+                </select>
+
+                <select className="dropdown" onChange={(e) => setnewPropertyId(e.target.value)}>
+                    <option value="">Select Property</option>
+                    {propertyList.map((property) => (
+                        <option key={property.PropertyID} value={property.PropertyID}>
+                            {property.Title}
+                        </option>
+                    ))}
+                </select>
+
+                <select className="dropdown" onChange={(e) => setnewUserId(e.target.value)}>
+                    <option value="">Select User</option>
+                    {userList.map((user) => (
+                        <option key={user.UserID} value={user.UserID}>
+                            {user.firstName} {user.lastName}
+                        </option>
+                    ))}
+                </select>
+                
             
                 <button onClick={CreateReview}>Create Review</button>
-            </div>
+            </form>
         </div>
     )
 }

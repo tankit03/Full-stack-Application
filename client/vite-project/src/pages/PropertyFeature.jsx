@@ -103,7 +103,7 @@ function PropertyFeature() {
             </div>
             <div className="form">
                 <label>Feature:</label>
-                <input type="text" name="Feature" onChange={(e) => { 
+                <input type="text" name="Feature" placeholder="Add feature, Ex: cool flying pool" onChange={(e) => { 
                     setFeature(e.target.value) 
                 }} />
                 <button onClick={createFeature}>Add Feature</button>
