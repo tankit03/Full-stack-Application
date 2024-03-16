@@ -173,6 +173,7 @@ function Review() {
                 </table> 
             </div>
             <form className="form" onSubmit={(e) => e.preventDefault()}>
+                <h2>Create User</h2>
                 <label>Create rating</label>
                 <input type="text" placeholder="Rating, Ex: 4,5 or 8" onChange={(e) => {
                     setnewRating(e.target.value);

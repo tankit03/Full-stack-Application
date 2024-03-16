@@ -244,6 +244,7 @@ function Properties() {
           </table>
         </div>
         <form className="form" onSubmit={(e) => e.preventDefault()}>
+          <h2>Create Property</h2>
           <label>Title:</label>
           <input type="text" placeholder="Title" onChange={(e) => {
             setNewTitle(e.target.value)

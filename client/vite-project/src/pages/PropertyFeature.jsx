@@ -10,6 +10,7 @@ function PropertyFeature() {
     const [Feature, setFeature] = useState("");
     const [Featurelist, setFeatureList] = useState([]);
 
+    const [SelectedFeatureID, setSelectedFeatureID] = useState("");
     const [NewFeatureID, setNewFeatureID] = useState("");
     const [NewFeature, setNewFeature] = useState("");
 
@@ -66,7 +67,7 @@ function PropertyFeature() {
             });
             console.log(response);
             const feature = response.data;
-            console.log(feature);
+            
             setFeatureList(feature);
 
         } catch (error) {
@@ -93,23 +94,37 @@ function PropertyFeature() {
                                 <td>{val.Feature}</td>
                                 <td>
                                     <button onClick={() => deleteFeature(val.FeatureID)}>Delete</button>
-                                    <input type="text" placeholder='Add Feature' onChange={(e) => { 
-                                        setNewFeature(e.target.value) 
-                                    }} />
-                                    <button onClick={() => updateFeature(val.FeatureID)}>Update</button>
+                                    
                                 </td>
                             </tr>                          
                         ))}
                     </tbody>
                 </table>
             </div>
-            <div className="form">
+            <form className="form" onSubmit={(e) => e.preventDefault()}>
+                <h2>Create Feature's</h2>
                 <label>Feature:</label>
                 <input type="text" name="Feature" placeholder="Add feature, Ex: cool flying pool" onChange={(e) => { 
                     setFeature(e.target.value) 
                 }} />
                 <button onClick={createFeature}>Add Feature</button>
-            </div>
+            </form>
+            
+            <form className="form" onSubmit={(e) =>  e.preventDefault()}>
+                
+                <h2>Update Feature</h2>
+                <label>Feature ID:</label>
+                <select className="dropdown" onChange={(e) => setSelectedFeatureID(e.target.value)} value={SelectedFeatureID}>
+                    <option value="">Select Feature ID</option>
+                    {Featurelist.map((feature) => (
+                        <option key={feature.FeatureID} value={feature.FeatureID}>{feature.FeatureID}</option>
+                    ))}
+                </select>
+                <label>New Feature:</label>
+                <input type="text" placeholder="New feature description" onChange={(e) => setNewFeature(e.target.value)} value={NewFeature} />
+                <button type="submit" onClick={() => updateFeature(SelectedFeatureID)} >Update Feature</button>
+            </form>
+                
         </div>
     )
 }

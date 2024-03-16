@@ -181,6 +181,7 @@ function App() {
           </table>
         </div>
         <form className="form" onSubmit={(e) => e.preventDefault()}>
+          <h2>Create Agent</h2>
           <label>First Name:</label>
           <input type="text" placeholder="First name" onChange={(e) => {
             setfirstName(e.target.value)

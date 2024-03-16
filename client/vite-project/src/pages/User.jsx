@@ -154,9 +154,10 @@ function User() {
                         ))}
                     </tbody>
                 </table>
-                <div className="form">
+            </div>
+                <form className="form" onSubmit={(e) => e.preventDefault()}>
+                    <h2>Create User</h2>
                     <label>User ID:</label>
-                    <label>First Name:</label>
                     <input type="text" placeholder="First name" onChange={(e) => {
                         setfirstName(e.target.value)
                     }} />
@@ -181,8 +182,7 @@ function User() {
                         setPasswordHash(e.target.value)
                     }} />
                     <button onClick={createUser}>Create User</button>
-                </div>
+                </form>
             </div>
-        </div>
     )
 } export default User

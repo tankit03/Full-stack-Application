@@ -328,24 +328,24 @@ ALTER TABLE `Viewings`
 -- Constraints for table `Property_Feature_Comparisons`
 --
 ALTER TABLE `Property_Feature_Comparisons`
-  ADD CONSTRAINT `fk_Property_Feature_Comparison_Properties_Feature1` FOREIGN KEY (`Properties_Feature_FeatureID`) REFERENCES `Properties_Features` (`FeatureID`) ON DELETE SET NULL ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Property_Feature_Comparison_properties` FOREIGN KEY (`properties_PropertyID`) REFERENCES `properties` (`PropertyID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Property_Feature_Comparison_Properties_Feature1` FOREIGN KEY (`Properties_Feature_FeatureID`) REFERENCES `Properties_Features` (`FeatureID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_Property_Feature_Comparison_properties` FOREIGN KEY (`properties_PropertyID`) REFERENCES `properties` (`PropertyID`) ON DELETE CASCADE,
 
 --
 -- Constraints for table `Reviews`
 --
 ALTER TABLE `Reviews`
-  ADD CONSTRAINT `fk_Review_Agent1` FOREIGN KEY (`Agent_AgentID`) REFERENCES `Agents` (`AgentID`) ON DELETE SET NULL ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Review_properties1` FOREIGN KEY (`properties_PropertyID`,`properties_Review_ReviewID`) REFERENCES `properties` (`PropertyID`, `Review_ReviewID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Reviews_Users1` FOREIGN KEY (`Users_UserID`) REFERENCES `Users` (`UserID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_Review_Agent1` FOREIGN KEY (`Agent_AgentID`) REFERENCES `Agents` (`AgentID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_Review_properties1` FOREIGN KEY (`properties_PropertyID`,`properties_Review_ReviewID`) REFERENCES `properties` (`PropertyID`, `Review_ReviewID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_Reviews_Users1` FOREIGN KEY (`Users_UserID`) REFERENCES `Users` (`UserID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `Viewings`
 --
 ALTER TABLE `Viewings`
-  ADD CONSTRAINT `fk_Viewings_Agents1` FOREIGN KEY (`Agents_AgentID`) REFERENCES `Agents` (`AgentID`) ON DELETE SET NULL ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Viewings_USER1` FOREIGN KEY (`USER_UserID`) REFERENCES `Users` (`UserID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Viewings_properties1` FOREIGN KEY (`properties_PropertyID`) REFERENCES `properties` (`PropertyID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_Viewings_Agents1` FOREIGN KEY (`Agents_AgentID`) REFERENCES `Agents` (`AgentID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_Viewings_USER1` FOREIGN KEY (`USER_UserID`) REFERENCES `Users` (`UserID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_Viewings_properties1` FOREIGN KEY (`properties_PropertyID`) REFERENCES `properties` (`PropertyID`) ON DELETE CASCADE;
 COMMIT;
 
 DESCRIBE `Agents`;
