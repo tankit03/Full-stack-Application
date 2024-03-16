@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
 PORT        = 9125;                 // Set a port number at the top so it's easy to change in the future
+app.use(express.urlencoded({ extended: true })); app.use(express.json());
 
 var db = require('./database/db-connector');  
 
@@ -155,10 +156,11 @@ app.post('/api/properties/insert', (req, res) => {
     const UniqueFeature = req.body.UniqueFeature;
     const ListingDate = req.body.ListingDate;
     const AgentID = req.body.AgentID;
+    const Review_ReviewID = req.body.Review_ReviewID;
 
     
-    const sqlInsert = `INSERT INTO properties (Title, City, State, Zipcode, Price, Description, PropertyType, Bedroom, Bathroom, SquareFeet, YearBuilt, RenovationDetails, UniqueFeature, ListingDate, AgentID) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
-    db.pool.query(sqlInsert, [Title, City, State, Zipcode, Price, Description, PropertyType, Bedroom, Bathroom, SquareFeet, YearBuilt, RenovationDetails, UniqueFeature, ListingDate, AgentID], (error, results) => {
+    const sqlInsert = `INSERT INTO properties (Title, City, State, Zipcode, Price, Description, PropertyType, Bedroom, Bathroom, SquareFeet, YearBuilt, RenovationDetails, UniqueFeature, ListingDate, AgentID, Review_ReviewID) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+    db.pool.query(sqlInsert, [Title, City, State, Zipcode, Price, Description, PropertyType, Bedroom, Bathroom, SquareFeet, YearBuilt, RenovationDetails, UniqueFeature, ListingDate, AgentID, Review_ReviewID], (error, results) => {
         if (error) {
             console.error("Error executing query# Find the process ID (PID)", error);
             res.status(500).send("Error executing query");
@@ -179,6 +181,47 @@ app.delete('/api/properties/delete/:PropertyID', (req, res) => {
             res.status(500).send('An error occurred');
         } else {
             res.send(result);
+        }
+    });
+});
+
+app.put('/api/properties/update', (req, res) => {
+
+    const PropertyID = req.body.properties;
+    const Title = req.body.Title;
+    const City = req.body.City;
+    const State = req.body.State;
+    const Zipcode = req.body.Zipcode;
+    const Price = req.body.Price;
+    const Description = req.body.Description;
+    const PropertyType = req.body.PropertyType;
+    const Bedroom = req.body.Bedroom;
+    const Bathroom = req.body.Bathroom;
+    const SquareFeet = req.body.SquareFeet;
+    const YearBuilt = req.body.YearBuilt;
+    const RenovationDetails = req.body.RenovationDetails;
+    const UniqueFeature = req.body.UniqueFeature;
+    const ListingDate = req.body.ListingDate;
+    const AgentID = req.body.AgentID;
+    const Review_ReviewID = req.body.Review_ReviewID;
+
+    const sqlUpdate = `UPDATE properties SET Title = ?, City = ?, State = ?, Zipcode = ?, Price = ?, Description = ?, PropertyType = ?, Bedroom = ?, Bathroom = ?, SquareFeet = ?, YearBuilt = ?, RenovationDetails = ?, UniqueFeature = ?, ListingDate = ?, AgentID = ?, Review_ReviewID = ? WHERE PropertyID = ?`;
+
+    db.pool.query(sqlUpdate, [Title, City, State, Zipcode, Price, Description, PropertyType, Bedroom, Bathroom, SquareFeet, YearBuilt, RenovationDetails, UniqueFeature, ListingDate, AgentID, Review_ReviewID, PropertyID], (error, result) => {
+        if (error) {
+            console.error(error);
+            res.status(500).send('An error occurred');
+        } else {
+            const getProperties = `SELECT * FROM properties`;
+            db.pool.query(getProperties, (err, properties) => {
+                if (err) {
+                    console.error(err);
+                    res.status(500).send('An error occurred');
+                }
+                else {
+                    res.send(properties);
+                }
+            });
         }
     });
 });
@@ -353,17 +396,19 @@ app.post('/api/viewing/insert', (req, res) => {
    
     const ViewingDate = req.body.ViewingDate;
     const Comment = req.body.Comments;
-    const propertiesID = req.body.properties_PropertyID;
-    const userID = req.body.USER_UserID;
-    const agentID = req.body.Agents_AgentID;
+    const propertiesID = parseInt(req.body.PropertyID, 10);
+    const userID = parseInt(req.body.UserID, 10);
+    const agentID = parseInt(req.body.AgentID, 10);
 
+    console.log(propertiesID);
+    console.log(userID);
+    console.log(agentID);
 
     console.log(req.body);
-    console.log(Comment);
-    
+    console.log(Comment);    
 
     const sqlInsert = `INSERT INTO Viewings (ViewingDate, Comment, properties_PropertyID, USER_UserID, Agents_AgentID) VALUES (?, ?, ?, ?, ?)`;
-    db.pool.query(sqlInsert, [ViewingDate, Comment, 1, 2, 3], (error, result) => {
+    db.pool.query(sqlInsert, [ViewingDate, Comment, propertiesID, userID, agentID], (error, result) => {
 
         if (error) {
             console.error("Error executing query:", error);
@@ -455,11 +500,15 @@ app.post('/api/review/insert', (req, res) => {
     const Rating = req.body.Rating;
     const Comment = req.body.Comment;
     const ReviewDate = req.body.ReviewDate;
-    
-    
+    const AgentID = parseInt(req.body.Agent_AgentID, 10);
+    const PropertyID = parseInt(req.body.properties_ProperyID, 10);
+    const ReviewID = parseInt(req.body.properties_Review_ReviewID, 10);
+    const UserID = parseInt(req.body.Users_UserID, 10);
 
-    const sqlInsert = `INSERT INTO Reviews (Rating, Comment, ReviewDate, Agent_AgentID, properties_PropertyID, properties_Review_ReviewID) VALUES (?, ?, ?, ?, ?, ?)`;
-    db.pool.query(sqlInsert, [Rating, Comment, ReviewDate, 2, 2, 4], (error, result) => {
+    console.log(req.body);
+    
+    const sqlInsert = `INSERT INTO Reviews (Rating, Comment, ReviewDate, Agent_AgentID, properties_PropertyID, properties_Review_ReviewID, Users_UserID) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    db.pool.query(sqlInsert, [Rating, Comment, ReviewDate, AgentID, PropertyID, ReviewID, UserID], (error, result) => {
         if(error){
             console.error("Error executing query:", error);
             res.status(500).send("Error executing query");
@@ -467,10 +516,64 @@ app.post('/api/review/insert', (req, res) => {
         }
         res.status(201).send("Review inserted successfully");
     });    
-    
-
 });
 
+app.put('/api/review/update', (req, res) => {
+
+    const Rating = req.body.Rating;
+    const Comment = req.body.Comment;
+    const ReviewDate = req.body.ReviewDate;
+    const ReviewID = req.body.ReviewID;
+
+    const sqlUpdate = `UPDATE Reviews SET Rating = ?, Comment = ?, ReviewDate = ? WHERE ReviewID = ?`;
+    
+    db.pool.query(sqlUpdate, [Rating, Comment, ReviewDate, ReviewID], (error, result) => {
+        if (error) {
+            console.error(error);
+            res.status(500).send('An error occurred');
+        } else {
+            const getReviews = `SELECT * FROM Reviews`;
+            db.pool.query(getReviews, (err, reviews) => {
+                if (err) {
+                    console.error(err);
+                    res.status(500).send('An error occurred');
+                }
+                else {
+                    res.send(reviews);
+                }
+            });
+        }
+    });
+});
+/* ---------------------------- For Properties Compare ------------------------------------------------------------------------------------ */
+
+app.get('/api/propertyCompare/get', (req, res) => {
+
+    const sqlSelect = "SELECT * FROM Property_Feature_Comparisons";
+    db.pool.query(sqlSelect, (err, result) => {
+        if(err){
+            console.error(err);
+            res.status(500).send('An error occurred while fetching properties compare');
+        }
+        else {
+            console.log(result);
+            res.send(result);
+        }
+    });
+});
+
+app.delete('/api/propertyCompare/delete/:properties_PropertyID', (req, res) => {
+    const PropertyID = req.params.properties_PropertyID;
+    const sqlDelete = `DELETE FROM Property_Feature_Comparisons WHERE properties_PropertyID = ?`;
+    db.pool.query(sqlDelete, PropertyID, (error, result) => {
+        if (error) {
+            console.error(error);
+            res.status(500).send('An error occurred');
+        } else {
+            res.send(result);
+        }
+    });
+});
     
 
 /*

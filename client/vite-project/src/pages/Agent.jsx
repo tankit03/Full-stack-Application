@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
 import Axios from 'axios'
 import { Route, Routes } from 'react-router-dom'
-import AgentPopup from './popups/AgentPopup'
+
+
 
 function App() {
+
+  const [butttonPopup, setButtonPopup] = useState(false);
 
   const [btntrigger, setTrigger] = useState(false);
   const [AgentID, setAgentID] = useState("");
@@ -107,11 +110,9 @@ function App() {
   }
 
   return (
-
     <>
-
       <div className="App">
-
+      <h1>Agent</h1>
         <div className="table-container">
           <table>
             <thead>
@@ -139,31 +140,40 @@ function App() {
 
                   <td>
                     <button onClick={() => deleteAgent(val.AgentID)}>Delete</button>
-                    <input type="text" id="updateInput" onChange={(e) => {
+                    
+                    
+                      <input type="text" id="updateInput" placeholder='First Name' onChange={(e) => {
                       setNewFirstAgentName(e.target.value)
-                    }
-                    } />
-                    <input type="text" id="updateInput" onChange={(e) => {
-                      setNewLastAgentName(e.target.value)
-                    }
-                    } />
-                    <input type="text" id="updateInput" onChange={(e) => {
-                      setNewAgentEmail(e.target.value)
-                    }
-                    } />
-                    <input type="text" id="updateInput" onChange={(e) => {
-                      setNewAgentPhone(e.target.value)
-                    }
-                    } />
-                    <input type="text" id="updateInput" onChange={(e) => {
-                      setNewAgentAgency(e.target.value)
-                    }
-                    } />
-                    <input type="text" id="updateInput" onChange={(e) => {
-                      setNewAgentLicense(e.target.value)
-                    }
-                    } /> 
-                    <button onClick={() => updateAgent(val.AgentID)}>Update</button>      
+                      }
+                      } />
+                      
+                      <input type="text" id="updateInput" placeholder='Last Name' onChange={(e) => {
+                        setNewLastAgentName(e.target.value)
+                      }
+                      } />
+                     
+                      <input type="text" id="updateInput" placeholder='Input Email' onChange={(e) => {
+                        setNewAgentEmail(e.target.value)
+                      }
+                      } />
+                      
+                      <input type="text" id="updateInput" placeholder='Phone Number' onChange={(e) => {
+                        setNewAgentPhone(e.target.value)
+                      }
+                      } />
+                      
+                      <input type="text" id="updateInput" placeholder='Agency Name' onChange={(e) => {
+                        setNewAgentAgency(e.target.value)
+                      }
+                      } />
+                      
+                      <input type="text" id="updateInput" placeholder='License Number' onChange={(e) => {
+                        setNewAgentLicense(e.target.value)
+                      }
+                      } /> 
+
+                      <button onClick={() => updateAgent(val.AgentID)}>Update</button>
+                    
                   </td>
                 </tr>
               ))}

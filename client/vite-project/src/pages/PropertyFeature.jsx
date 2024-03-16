@@ -3,6 +3,7 @@ import Axios from 'axios'
 import { Route, Routes } from 'react-router-dom'
 
 
+
 function PropertyFeature() {
 
     const [FeatureID, setFeatureID] = useState("");
@@ -75,6 +76,7 @@ function PropertyFeature() {
 
     return (
         <div className="App">
+            <h1>Property Feature</h1>
             <div className="table-container">
                 <table>
                     <thead>
@@ -91,7 +93,7 @@ function PropertyFeature() {
                                 <td>{val.Feature}</td>
                                 <td>
                                     <button onClick={() => deleteFeature(val.FeatureID)}>Delete</button>
-                                    <input type="text" id="NewFeatureID" onChange={(e) => { 
+                                    <input type="text" placeholder='Add Feature' onChange={(e) => { 
                                         setNewFeature(e.target.value) 
                                     }} />
                                     <button onClick={() => updateFeature(val.FeatureID)}>Update</button>

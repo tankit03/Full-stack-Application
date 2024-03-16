@@ -97,7 +97,7 @@ function User() {
            
     return (
         <div className="App">
-
+            <h1>Users</h1>
             <div className="table-container">
                 <table>
                     <thead>

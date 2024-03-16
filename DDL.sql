@@ -195,9 +195,9 @@ CREATE OR REPLACE TABLE `Viewings` (
   `ViewingID` int(11) NOT NULL,
   `ViewingDate` datetime NOT NULL,
   `Comment` text NOT NULL,
-  `properties_PropertyID` int(11) NOT NULL,
-  `USER_UserID` int(11) NOT NULL,
-  `Agents_AgentID` int(11) NOT NULL
+  `properties_PropertyID` int(11),
+  `USER_UserID` int(11),
+  `Agents_AgentID` int(11)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 --
@@ -368,12 +368,12 @@ SELECT AgentID, firstName, lastName FROM Agents;
 
 
 
-SELECT properties.PropertyID, Reviews.ReviewID, properties.Adress, Reviews.Comment AS Review 
+SELECT properties.PropertyID, Reviews.ReviewID, properties.address, Reviews.Comment AS Review 
 FROM properties 
 INNER JOIN Reviews ON properties.PropertyID = Reviews.properties_PropertyID 
-ORDER BY Adress, Review;
+ORDER BY address, Review;
 
-UPDATE properties SET Adress = '123 Main St', AgentID = 1 WHERE PropertyID = 1;
+UPDATE properties SET address = '123 Main St', AgentID = 1 WHERE PropertyID = 1;
 
 
 DELETE FROM Reviews WHERE properties_PropertyID = 1 AND ReviewID = 1;

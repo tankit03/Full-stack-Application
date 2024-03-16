@@ -105,7 +105,30 @@ function Properties() {
         }
       };
 
-
+      const updateProperty = async (id) => {
+        try {
+          await Axios.put(`http://flip1.engr.oregonstate.edu:9125/api/properties/update`,{
+          properties: id,
+          Title: newTitle,
+          City: newCity,
+          State: newState,
+          Zipcode: newZipcode,
+          Price: newPrice,
+          Description: newDescription,
+          PropertyType: newPropertyType,
+          Bedroom: newBedroom,
+          Bathroom: newBathroom,
+          SquareFeet: newSquareFeet,
+          YearBuilt: newYearBuilt,
+          RenovationDetails: newRenovationDetails,
+          UniqueFeature: newUniqueFeatures,
+          ListingDate: newListingDate,
+        });
+          await fetchAllData(); // Fetch all data again to refresh the list
+        } catch (error) {
+          console.error(error);
+        }
+      };
         
     return (
         <div className="App">
@@ -158,7 +181,62 @@ function Properties() {
                   <td>{val.Review_ReviewID}</td>
 
                   <td>
-                    <button onClick={() => {deleteProperty(val.PropertyID)}}>Delete</button>      
+                    <button onClick={() => {deleteProperty(val.PropertyID)}}>Delete</button>
+                    <input type="text" placeholder="Title" onChange={(e) => {
+                      setNewTitle(e.target.value)
+                    }} />
+                    <input type="text" placeholder="City" onChange={(e) => {
+                      setNewCity(e.target.value)
+                    }} />
+                    <input type="text" placeholder="State, Ex: NY, OR" onChange={(e) => {
+                      setNewState(e.target.value)
+                    }
+                    } />
+                    <input type="text" placeholder="Zipcode, Ex: 97229" onChange={(e) => {
+                      setNewZipcode(e.target.value)
+                    }
+                    } />
+                    <input type="text" placeholder="Price, Ex: 120,000" onChange={(e) => {
+                      setNewPrice(e.target.value)
+                    }
+                    } />
+                    <input type="text" placeholder="Description of property" onChange={(e) => {
+                      setNewDescription(e.target.value)
+                    }
+                    } />
+                    <input type="text" placeholder="Property Type, Ex: Apartment or Villa" onChange={(e) => {
+                      setNewPropertyType(e.target.value)
+                    }
+                    } />
+                    <input type="text" placeholder="Bedrooms in the property" onChange={(e) => {
+                      setNewBedroom(e.target.value)
+                    }
+                    } />
+                    <input type="text" placeholder="Bathrooms in the property" onChange={(e) => {
+                      setNewBathroom(e.target.value)
+                    }
+                    } />
+                    <input type="text" placeholder="SquareFeet of the property" onChange={(e) => {
+                      setNewSquareFeet(e.target.value)
+                    }
+                    } />
+                    <input type="text" placeholder="Year built, Ex: 2012" onChange={(e) => {
+                      setNewYearBuilt(e.target.value)
+                    }
+                    } />
+                    <input type="text" placeholder="Renovation details, Ex: New Roof (2016) " onChange={(e) => {
+                      setNewRenovationDetails(e.target.value)
+                    }
+                    } />
+                    <input type="text" placeholder="Unique feature of the property, Ex: Secert Roof" onChange={(e) => {
+                      setNewUniqueFeatures(e.target.value)
+                    }
+                    } />
+                    <input type="text" placeholder="The Listing date, 2024-02-15T08:00:00.000Z " onChange={(e) => {
+                      setNewListingDate(e.target.value)
+                    }
+                    } />
+                    <button onClick={() => {updateProperty(val.PropertyID)}}>Update</button>      
                  </td>
                 </tr>
               ))}
@@ -234,6 +312,23 @@ function Properties() {
             setNewListingDate(e.target.value)
           }
           } />
+          <select className="dropdown" onChange={(e) => setNewAgentID(e.target.value)}>
+            <option value="">Select Agent</option>
+            {AgentList.map((agent) => (
+              <option key={agent.AgentID} value={agent.AgentID}>
+                {agent.firstName} {agent.lastName}
+              </option>
+            ))}
+          </select>
+
+          <select className="dropdown" onChange={(e) => setNewReview_ReviewID(e.target.value)}>
+            <option value="">Select Review ID</option>
+            {ReviewList.map((review) => (
+              <option key={review.ReviewID} value={review.ReviewID}>
+                {review.ReviewID}
+              </option>
+            ))}
+          </select>
           <button onClick={createProperty}>Submit</button>
         </form>
       </div>

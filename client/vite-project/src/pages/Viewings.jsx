@@ -102,6 +102,7 @@ function Viewings() {
 	return (
     <div className="App">
         {/* Viewing Table */}
+        <h1>Viewings</h1>
         <div className="table-container">
             <table>
                 <thead>
@@ -126,6 +127,14 @@ function Viewings() {
                             <td>{viewing.properties_PropertyID}</td>
                             <td>
                                 <button onClick={() => deleteViewing(viewing.ViewingID)}>Delete</button>
+                                
+                                <input type="text" placeholder="Ex: 2024-02-07T16:00:00.000Z" onChange={(e) => { 
+                                setNewViewingDate(e.target.value)}} />
+                                <input type="text" placeholder="Comments" onChange={(e) => {
+                                setNewComments(e.target.value)}} />
+                                
+                            
+
                                 <button onClick={() => updateViewing(viewing.ViewingID)}>Update</button>
                             </td>
                         </tr>

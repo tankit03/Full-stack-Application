@@ -102,8 +102,8 @@ function Review() {
 
     const updateReview = async (id) => {
         try{
-            const response = await Axios.put(`http://flip1.engr.oregonstate.edu:9125/api/review/update`, {
-                ReviewID: newReviewID,
+            await Axios.put(`http://flip1.engr.oregonstate.edu:9125/api/review/update`, {
+                ReviewID: id,
                 Rating: newRating,
                 Comment: newComment,
                 ReviewDate: newReviewDate,
@@ -112,7 +112,6 @@ function Review() {
                 properties_Review_ReviewID: newpropertiesReviewReviewID,
                 Users_UserID: newUserId
             });
-            console.log(response);
             await fetchAllData();
         } catch (error) {
             console.error(error);
@@ -153,6 +152,19 @@ function Review() {
                         <td>{val.Users_UserID}</td> 
                         <td>
                             <button onClick={() => deleteReview(val.ReviewID)}>Delete</button>
+                            <input type="text" id="updateInput" placeholder="First name" onChange={(e) => {
+                                        setnewRating(e.target.value)
+                                    }
+                                    } />
+                                    <input type="text" id="updateInput" placeholder="input comments" onChange={(e) => {
+                                        setnewComment(e.target.value)
+                                    }
+                                    } />
+                                    <input type="text" id="updateInput" placeholder="Type email: Ex hello@gamil.com" onChange={(e) => {
+                                        setnewReviewDate(e.target.value)
+                                    }
+                                    } />
+
                             <button onClick={() => updateReview(val.ReviewID)}>Update</button>
                         </td>
                     </tr>
@@ -191,6 +203,16 @@ function Review() {
                         </option>
                     ))}
                 </select>
+
+                <select className="dropdown" onChange={(e) => setnewpropertiesReviewReviewID(e.target.value)}>
+                    <option value="">Select Review ID</option>
+                    {reviewList.map((review) => (
+                        <option key={review.ReviewID} value={review.ReviewID}>
+                            {review.ReviewID}
+                        </option>
+                    ))}
+                </select>
+
 
                 <select className="dropdown" onChange={(e) => setnewUserId(e.target.value)}>
                     <option value="">Select User</option>
