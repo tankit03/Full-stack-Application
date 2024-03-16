@@ -18,6 +18,7 @@ function App() {
   const [LicenseNumber, setLicenseNumber] = useState("");
   const [agentList, setAgentList] = useState([]);
 
+  const [SelectedAgentID, setSelectedAgentID] = useState("");
   const [NewFirstAgentName, setNewFirstAgentName] = useState("");
   const [NewLastAgentName, setNewLastAgentName] = useState("");
   const [NewAgentEmail, setNewAgentEmail] = useState("");
@@ -140,40 +141,6 @@ function App() {
 
                   <td>
                     <button onClick={() => deleteAgent(val.AgentID)}>Delete</button>
-                    
-                    
-                      <input type="text" id="updateInput" placeholder='First Name' onChange={(e) => {
-                      setNewFirstAgentName(e.target.value)
-                      }
-                      } />
-                      
-                      <input type="text" id="updateInput" placeholder='Last Name' onChange={(e) => {
-                        setNewLastAgentName(e.target.value)
-                      }
-                      } />
-                     
-                      <input type="text" id="updateInput" placeholder='Input Email' onChange={(e) => {
-                        setNewAgentEmail(e.target.value)
-                      }
-                      } />
-                      
-                      <input type="text" id="updateInput" placeholder='Phone Number' onChange={(e) => {
-                        setNewAgentPhone(e.target.value)
-                      }
-                      } />
-                      
-                      <input type="text" id="updateInput" placeholder='Agency Name' onChange={(e) => {
-                        setNewAgentAgency(e.target.value)
-                      }
-                      } />
-                      
-                      <input type="text" id="updateInput" placeholder='License Number' onChange={(e) => {
-                        setNewAgentLicense(e.target.value)
-                      }
-                      } /> 
-
-                      <button onClick={() => updateAgent(val.AgentID)}>Update</button>
-                    
                   </td>
                 </tr>
               ))}
@@ -208,6 +175,30 @@ function App() {
           }} />
           <button onClick={createAgent}>Submit</button>
         </form>
+
+          <form className="form" onSubmit={(e) => e.preventDefault()}>
+            <h2>Update Agent</h2>
+            <label>Select Agent ID to update: </label>
+            <select className="dropdown" onChange={(e) => setSelectedAgentID(e.target.value)} value={SelectedAgentID}>
+              <option value="">Select Agent ID</option>
+              {agentList.map((agent) => (
+                <option key={agent.AgentID} value={agent.AgentID}>{agent.AgentID}</option>
+              ))}
+            </select>
+            <label>First Name:</label>
+            <input type="text" placeholder="First name" onChange={(e) => setNewFirstAgentName(e.target.value)} />
+            <label>Last Name:</label>
+            <input type="text" placeholder="Last name" onChange={(e) => setNewLastAgentName(e.target.value)} />
+            <label>Email:</label>
+            <input type="text" placeholder="Type email: Ex: hello@gmail.com" onChange={(e) => setNewAgentEmail(e.target.value)} />
+            <label>Phone Number:</label>
+            <input type="text" placeholder="Type Phone Number: (xxx)-xxx-xxxx" onChange={(e) => setNewAgentPhone(e.target.value)} />
+            <label>Agency Name:</label>
+            <input type="text" placeholder="Add your Agency Name" onChange={(e) => setNewAgentAgency(e.target.value)} />
+            <label>License Number:</label>
+            <input type="text" placeholder="Add your License number" onChange={(e) => setNewAgentLicense(e.target.value)} />
+            <button type="submit" onClick={() => updateAgent(SelectedAgentID)} >Update Agent</button>
+          </form>
       </div>
     </>
   )

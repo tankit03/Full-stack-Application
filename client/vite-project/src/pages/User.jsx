@@ -15,6 +15,7 @@ function User() {
     const [PasswordHash, setPasswordHash] = useState(" ");
     const [UserList, setUserList] = useState([]);
 
+    const [SelectedUserID, setSelectedUserID] = useState(" ");
     const [NewFirstUserName, setNewFirstUserName] = useState(" ");
     const [NewLastUserName, setNewLastUserName] = useState(" ");
     const [NewUserEmail, setNewUserEmail] = useState(" ");
@@ -124,31 +125,6 @@ function User() {
                                 <td>{val.PasswordHash}</td>
                                 <td>
                                     <button onClick={() => deleteUser(val.UserID)}>Delete</button>
-                                    <input type="text" id="updateInput" placeholder="First name" onChange={(e) => {
-                                        setNewFirstUserName(e.target.value)
-                                    }
-                                    } />
-                                    <input type="text" id="updateInput" placeholder="Last name" onChange={(e) => {
-                                        setNewLastUserName(e.target.value)
-                                    }
-                                    } />
-                                    <input type="text" id="updateInput" placeholder="Type email: Ex hello@gamil.com" onChange={(e) => {
-                                        setNewUserEmail(e.target.value)
-                                    }
-                                    } />
-                                    <input type="text" id="updateInput" placeholder="Type Phone Number: (xxx)-xxx-xxxx" onChange={(e) => {
-                                        setNewUserPhone(e.target.value)
-                                    }
-                                    } />
-                                    <input type="text" id="updateInput" placeholder="Input New budget value: 90000" onChange={(e) => {
-                                        setNewUserBudget(e.target.value)
-                                    }
-                                    } />
-                                    <input type="text" id="updateInput" placeholder="Input password hash" onChange={(e) => {
-                                        setNewUserPassword(e.target.value)
-                                    }
-                                    } />
-                                    <button onClick={() => updateUser(val.UserID)}>Update</button>
                                 </td>
                             </tr>
                         ))}
@@ -183,6 +159,31 @@ function User() {
                     }} />
                     <button onClick={createUser}>Create User</button>
                 </form>
+
+                <form className="form" onSubmit={(e) => e.preventDefault()}>
+                    <h2>Update User</h2>
+                    <label>Select User ID to update: </label>
+                    <select className="dropdown" onChange={(e) => setSelectedUserID(e.target.value)} value={SelectedUserID}>
+                        <option value="">Select User ID</option>
+                        {UserList.map((user) => (
+                            <option key={user.UserID} value={user.UserID}>{user.UserID}</option>
+                        ))}
+                    </select>
+                    <label>First Name:</label>
+                    <input type="text" placeholder="First name" onChange={(e) => {setNewFirstUserName(e.target.value)}} />
+                    <label>Last Name:</label>
+                    <input type="text" placeholder="Last name" onChange={(e) => {setNewLastUserName(e.target.value)}} />
+                    <label>Email:</label>
+                    <input type="text" placeholder="Ex: hello@gmail.com" onChange={(e) => {setNewUserEmail(e.target.value)}} />
+                    <label>Phone Number:</label>
+                    <input type="text" placeholder="Ex: (xxx)-xxx-xxxx" onChange={(e) => {setNewUserPhone(e.target.value)}} />
+                    <label>Budget:</label>
+                    <input type="text" placeholder="Ex: 90000" onChange={(e) => {setNewUserBudget(e.target.value)}} />
+                    <label>Password Hash:</label>
+                    <input type="text" placeholder="Ex: 123456" onChange={(e) => {setNewUserPassword(e.target.value)}} />
+                    <button type="submit" onClick={() => updateUser(SelectedUserID)} >Update User</button>
+                </form>
+
             </div>
     )
 } export default User

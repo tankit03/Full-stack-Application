@@ -2,10 +2,6 @@ import { useEffect, useState } from "react"
 import Axios from "axios"
 import { Route, Routes } from "react-router-dom"
 
-
-
-
-
 function Review() {
 
     const [reviewList, setReviewList] = useState([]);
@@ -15,6 +11,7 @@ function Review() {
 
     //new viewings state hooks
 
+    const [SelectedReviewID, setSelectedReviewID] = useState("");
     const [newReviewID, setnewReviewID] = useState("");
     const [newRating, setnewRating] = useState("");
     const [newComment, setnewComment] = useState("");
@@ -130,10 +127,10 @@ function Review() {
                         <th>ReviewID</th>
                         <th>Rating</th>
                         <th>Comment</th>
-                        <th>ReviewDate</th>
+                        <th>Review Date</th>
                         <th>Agent ID</th>
                         <th>Property ID</th>
-                        <th>properties_Review_ReviewID</th>
+                        <th>Properties Review ID</th>
                         <th>User ID</th>
                         <th>Actions</th>
                     </tr>
@@ -152,20 +149,6 @@ function Review() {
                         <td>{val.Users_UserID}</td> 
                         <td>
                             <button onClick={() => deleteReview(val.ReviewID)}>Delete</button>
-                            <input type="text" id="updateInput" placeholder="First name" onChange={(e) => {
-                                        setnewRating(e.target.value)
-                                    }
-                                    } />
-                                    <input type="text" id="updateInput" placeholder="input comments" onChange={(e) => {
-                                        setnewComment(e.target.value)
-                                    }
-                                    } />
-                                    <input type="text" id="updateInput" placeholder="Type email: Ex hello@gamil.com" onChange={(e) => {
-                                        setnewReviewDate(e.target.value)
-                                    }
-                                    } />
-
-                            <button onClick={() => updateReview(val.ReviewID)}>Update</button>
                         </td>
                     </tr>
                   ))}
@@ -223,9 +206,26 @@ function Review() {
                         </option>
                     ))}
                 </select>
-                
-            
                 <button onClick={CreateReview}>Create Review</button>
+            </form>
+    
+            <form className="form" onSubmit={(e) => e.preventDefault()}>
+
+                <h2>Update Review</h2>
+                <label>Select Review ID to update: </label>
+                <select className="dropdown" onChange={(e) => setSelectedReviewID(e.target.value)} value={SelectedReviewID}>
+                    <option value="">Select Review ID</option>
+                    {reviewList.map((review) => (
+                        <option key={review.ReviewID} value={review.ReviewID}>{review.ReviewID}</option>
+                    ))}
+                </select>
+                <label>New Rating:</label>
+                <input type="text" placeholder="New rating" onChange={(e) => setnewRating(e.target.value)} value={newRating} />
+                <label>New Comment:</label>
+                <input type="text" placeholder="New comment" onChange={(e) => setnewComment(e.target.value)} value={newComment} />
+                <label>New Review Date:</label>
+                <input type="text" placeholder="New review date" onChange={(e) => setnewReviewDate(e.target.value)} value={newReviewDate} />
+                <button type="submit" onClick={() => updateReview(SelectedReviewID)} >Update Review</button>
             </form>
         </div>
     )

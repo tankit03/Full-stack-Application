@@ -9,6 +9,7 @@ function Viewings() {
     const [propertiesList, setPropertiesList] = useState([]);
 
     // New viewing state hooks
+    const [SelectedViewingID, setSelectedViewingID] = useState("");
     const [newViewingDate, setNewViewingDate] = useState("");
     const [newComments, setNewComments] = useState("");
     const [newAgentId, setNewAgentId] = useState("");
@@ -127,15 +128,6 @@ function Viewings() {
                             <td>{viewing.properties_PropertyID}</td>
                             <td>
                                 <button onClick={() => deleteViewing(viewing.ViewingID)}>Delete</button>
-                                
-                                <input type="text" placeholder="Ex: 2024-02-07T16:00:00.000Z" onChange={(e) => { 
-                                setNewViewingDate(e.target.value)}} />
-                                <input type="text" placeholder="Comments" onChange={(e) => {
-                                setNewComments(e.target.value)}} />
-                                
-                            
-
-                                <button onClick={() => updateViewing(viewing.ViewingID)}>Update</button>
                             </td>
                         </tr>
                     ))}
@@ -175,8 +167,23 @@ function Viewings() {
                     </option>
                 ))}
             </select>
- 
             <button type="submit" onClick={createViewing}>Create Viewing</button>
+        </form>
+
+        {/* Update Form */}
+        <form className="form" onSubmit={(e) => e.preventDefault()}>
+            <h2>Update Viewing</h2>
+            <select className="dropdown" onChange={(e) => setSelectedViewingID(e.target.value)} value={SelectedViewingID}>
+                <option value="">Select Viewing ID</option>
+                {viewingList.map((viewing) => (
+                    <option key={viewing.ViewingID} value={viewing.ViewingID}>
+                        {viewing.ViewingID}
+                    </option>
+                ))}
+            </select>
+            <input type="text" placeholder="Viewing Date" onChange={(e) => setNewViewingDate(e.target.value)} />
+            <input type="text" placeholder="Comments" onChange={(e) => setNewComments(e.target.value)} />
+            <button type="submit" onClick={() => updateViewing(SelectedViewingID)}>Update Viewing</button>
         </form>
     </div>
 );

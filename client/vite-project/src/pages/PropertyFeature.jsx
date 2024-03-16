@@ -11,7 +11,6 @@ function PropertyFeature() {
     const [Featurelist, setFeatureList] = useState([]);
 
     const [SelectedFeatureID, setSelectedFeatureID] = useState("");
-    const [NewFeatureID, setNewFeatureID] = useState("");
     const [NewFeature, setNewFeature] = useState("");
 
     const fetchFeatures = async () => {
@@ -113,7 +112,7 @@ function PropertyFeature() {
             <form className="form" onSubmit={(e) =>  e.preventDefault()}>
                 
                 <h2>Update Feature</h2>
-                <label>Feature ID:</label>
+                <label>Select Feature ID to update: </label>
                 <select className="dropdown" onChange={(e) => setSelectedFeatureID(e.target.value)} value={SelectedFeatureID}>
                     <option value="">Select Feature ID</option>
                     {Featurelist.map((feature) => (
@@ -124,7 +123,6 @@ function PropertyFeature() {
                 <input type="text" placeholder="New feature description" onChange={(e) => setNewFeature(e.target.value)} value={NewFeature} />
                 <button type="submit" onClick={() => updateFeature(SelectedFeatureID)} >Update Feature</button>
             </form>
-                
         </div>
     )
 }

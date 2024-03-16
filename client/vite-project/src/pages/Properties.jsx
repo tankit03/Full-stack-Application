@@ -9,6 +9,7 @@ function Properties() {
     const [AgentList, setAgentList] = useState([]);
     const [ReviewList, setReviewList] = useState([]);
 
+    const [SelectedPropertyID, setSelectedPropertyID] = useState("");
     const [newPropertyId, setNewPropertyId] = useState("");
     const [newTitle, setNewTitle] = useState("");
     const [newCity, setNewCity] = useState("");
@@ -134,7 +135,7 @@ function Properties() {
         <div className="App">
             <h1>Properties</h1>
 
-            <div className="table-container">
+            <div className="properties-table">
           <table>
             <thead>
               <tr>
@@ -145,16 +146,16 @@ function Properties() {
                 <th>Zipcode</th>
                 <th>Price</th>
                 <th>Description</th>
-                <th>PropertyType</th>
+                <th>Property Type</th>
                 <th>Bedroom</th>
                 <th>Bathroom</th>
                 <th>SquareFeet</th>
-                <th>YearBuilt</th>
-                <th>RenovationDetails</th>
-                <th>UniqueFeatures</th>
-                <th>ListingDate</th>
-                <th>AgentID</th>
-                <th>Review_ReviewID</th>
+                <th>Year Built</th>
+                <th>Renovation Details</th>
+                <th>Unique Features</th>
+                <th>Listing Date</th>
+                <th>Agent ID</th>
+                <th>Review ID</th>
                 <th>Actions</th>
 
               </tr>
@@ -181,62 +182,7 @@ function Properties() {
                   <td>{val.Review_ReviewID}</td>
 
                   <td>
-                    <button onClick={() => {deleteProperty(val.PropertyID)}}>Delete</button>
-                    <input type="text" placeholder="Title" onChange={(e) => {
-                      setNewTitle(e.target.value)
-                    }} />
-                    <input type="text" placeholder="City" onChange={(e) => {
-                      setNewCity(e.target.value)
-                    }} />
-                    <input type="text" placeholder="State, Ex: NY, OR" onChange={(e) => {
-                      setNewState(e.target.value)
-                    }
-                    } />
-                    <input type="text" placeholder="Zipcode, Ex: 97229" onChange={(e) => {
-                      setNewZipcode(e.target.value)
-                    }
-                    } />
-                    <input type="text" placeholder="Price, Ex: 120,000" onChange={(e) => {
-                      setNewPrice(e.target.value)
-                    }
-                    } />
-                    <input type="text" placeholder="Description of property" onChange={(e) => {
-                      setNewDescription(e.target.value)
-                    }
-                    } />
-                    <input type="text" placeholder="Property Type, Ex: Apartment or Villa" onChange={(e) => {
-                      setNewPropertyType(e.target.value)
-                    }
-                    } />
-                    <input type="text" placeholder="Bedrooms in the property" onChange={(e) => {
-                      setNewBedroom(e.target.value)
-                    }
-                    } />
-                    <input type="text" placeholder="Bathrooms in the property" onChange={(e) => {
-                      setNewBathroom(e.target.value)
-                    }
-                    } />
-                    <input type="text" placeholder="SquareFeet of the property" onChange={(e) => {
-                      setNewSquareFeet(e.target.value)
-                    }
-                    } />
-                    <input type="text" placeholder="Year built, Ex: 2012" onChange={(e) => {
-                      setNewYearBuilt(e.target.value)
-                    }
-                    } />
-                    <input type="text" placeholder="Renovation details, Ex: New Roof (2016) " onChange={(e) => {
-                      setNewRenovationDetails(e.target.value)
-                    }
-                    } />
-                    <input type="text" placeholder="Unique feature of the property, Ex: Secert Roof" onChange={(e) => {
-                      setNewUniqueFeatures(e.target.value)
-                    }
-                    } />
-                    <input type="text" placeholder="The Listing date, 2024-02-15T08:00:00.000Z " onChange={(e) => {
-                      setNewListingDate(e.target.value)
-                    }
-                    } />
-                    <button onClick={() => {updateProperty(val.PropertyID)}}>Update</button>      
+                    <button onClick={() => {deleteProperty(val.PropertyID)}}>Delete</button>     
                  </td>
                 </tr>
               ))}
@@ -331,6 +277,46 @@ function Properties() {
             ))}
           </select>
           <button onClick={createProperty}>Submit</button>
+        </form>
+
+        <form className="form" onSubmit={(e) => e.preventDefault()}>
+          <h2>Update Property</h2>
+          <label>Select Property ID to update: </label>
+          <select className="dropdown" onChange={(e) => setSelectedPropertyID(e.target.value)} value={SelectedPropertyID}>
+            <option value="">Select Property ID</option>
+            {propertyList.map((property) => (
+              <option key={property.PropertyID} value={property.PropertyID}>{property.PropertyID}</option>
+            ))}
+          </select>
+          <label>Title:</label>
+          <input type="text" placeholder="Title" onChange={(e) => setNewTitle(e.target.value)} value={newTitle} />
+          <label>City:</label>
+          <input type="text" placeholder="City" onChange={(e) => setNewCity(e.target.value)} value={newCity} />
+          <label>State:</label>
+          <input type="text" placeholder="State, Ex: NY, OR" onChange={(e) => setNewState(e.target.value)} value={newState} />
+          <label>Zipcode:</label>
+          <input type="text" placeholder="Zipcode, Ex: 97229" onChange={(e) => setNewZipcode(e.target.value)} value={newZipcode} />
+          <label>Price:</label>
+          <input type="text" placeholder="Price, Ex: 120,000" onChange={(e) => setNewPrice(e.target.value)} value={newPrice} />
+          <label>Description:</label>
+          <input type="text" placeholder="Description of property" onChange={(e) => setNewDescription(e.target.value)} value={newDescription} />
+          <label>Property Type:</label>
+          <input type="text" placeholder="Property Type, Ex: Apartment or Villa" onChange={(e) => setNewPropertyType(e.target.value)} value={newPropertyType} />
+          <label>Bedroom:</label>
+          <input type="text" placeholder="Bedrooms in the property" onChange={(e) => setNewBedroom(e.target.value)} value={newBedroom} />
+          <label>Bathroom:</label>
+          <input type="text" placeholder="Bathrooms in the property" onChange={(e) => setNewBathroom(e.target.value)} value={newBathroom} />
+          <label>Square Feet:</label>
+          <input type="text" placeholder="SquareFeet of the property" onChange={(e) => setNewSquareFeet(e.target.value)} value={newSquareFeet} />
+          <label>Year Built:</label>
+          <input type="text" placeholder="Year built, Ex: 2012" onChange={(e) => setNewYearBuilt(e.target.value)} value={newYearBuilt} />
+          <label>Renovation Details:</label>
+          <input type="text" placeholder="Renovation details, Ex: New Roof (2016) " onChange={(e) => setNewRenovationDetails(e.target.value)} value={newRenovationDetails} />
+          <label>Unique Features:</label>
+          <input type="text" placeholder="Unique feature of the property, Ex: Secert Roof" onChange={(e) => setNewUniqueFeatures(e.target.value)} value={newUniqueFeatures} />
+          <label>Listing Date:</label>
+          <input type="text" placeholder="The Listing date, 2024-02-15T08:00:00.000Z " onChange={(e) => setNewListingDate(e.target.value)} value={newListingDate} />
+          <button type="submit" onClick={() => updateProperty(SelectedPropertyID)} >Update Property</button>
         </form>
       </div>
     )
