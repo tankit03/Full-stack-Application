@@ -440,9 +440,7 @@ app.put('/api/viewing/update', (req, res) => {
         const ViewingID = req.body.ViewingID;
         const ViewingDate = req.body.ViewingDate;
         const Comments = req.body.Comments;
-        const Agents_AgentID = req.body.Agents_AgentID;
-        const User_userID = req.body.User_UserID;
-        const Properties_propertyID = req.body.Properties_properyID;
+        
     
         const sqlUpdate = `UPDATE Viewings SET ViewingDate = ?, Comment = ? WHERE ViewingID = ?`;
 

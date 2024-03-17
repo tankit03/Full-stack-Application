@@ -105,7 +105,6 @@ CREATE OR REPLACE TABLE `Properties_Features` (
 --
 
 INSERT INTO `Properties_Features` (`FeatureID`, `Feature`) VALUES
-(0, ' '),
 (1, 'Swimming Pool'),
 (2, 'Hardwood floors'),
 (3, 'Granite Counterops'),
