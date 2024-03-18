@@ -1,14 +1,26 @@
+// 1 Citation for the following function:
+// 2 Date: 12/18/2022
+// 3 Based on Pedro Tech video on implementing a CRUD application with React and Node.js
+// 4 Source URL: https://www.youtube.com/watch?v=re3OIOr9dJI
+// 5
+
+// Import the useEffect and useState hooks from the react library
+
 import { useEffect, useState } from 'react'
 import Axios from 'axios'
 import { Route, Routes } from 'react-router-dom'
 
+// Define the Properties function
 
 function Properties() {
+
+    // Define the useState function to set the state of the variables
   
     const [propertyList, setPropertyList] = useState([]);
     const [AgentList, setAgentList] = useState([]);
     const [ReviewList, setReviewList] = useState([]);
 
+    // New viewing state hooks
     const [SelectedPropertyID, setSelectedPropertyID] = useState("");
     const [newPropertyId, setNewPropertyId] = useState("");
     const [newTitle, setNewTitle] = useState("");
@@ -28,12 +40,15 @@ function Properties() {
     const [newAgentID, setNewAgentID] = useState("");
     const [newReview_ReviewID, setNewReview_ReviewID] = useState("");
 
+    // Fetch all data from the server
+
     const url = {
         properties: 'http://flip1.engr.oregonstate.edu:9125/api/properties/get',
         agents: 'http://flip1.engr.oregonstate.edu:9125/api/agents/get',
         reviews: 'http://flip1.engr.oregonstate.edu:9125/api/review/get'
     };
     
+    // Fetch data from the server
 
     const fetchProperties = async (url) => {
       try{
@@ -44,6 +59,8 @@ function Properties() {
         return [];
       }
     };
+
+    // Fetch all data from the server
 
     const fetchAllData = async () => {
       try {
@@ -64,6 +81,8 @@ function Properties() {
     useEffect(() => {
       fetchAllData();
     }, []);
+
+    // Create, delete, and update viewing functions
 
     const createProperty = async () => {
       console.log("back-end data: ",newPropertyId, newTitle, newCity, newState, newZipcode, newPrice, newDescription, newPropertyType, newBedroom, newBathroom, newSquareFeet, newYearBuilt, newRenovationDetails, newUniqueFeatures, newListingDate, newAgentID, newReview_ReviewID);
@@ -96,6 +115,8 @@ function Properties() {
           }
       };
 
+      // Create, delete, and update viewing functions
+
       const deleteProperty = async (id) => {
         try {
           await Axios.delete(`http://flip1.engr.oregonstate.edu:9125/api/properties/delete/${id}`);
@@ -105,6 +126,8 @@ function Properties() {
           console.error(error);
         }
       };
+
+      // Create, delete, and update viewing functions
 
       const updateProperty = async (id) => {
         try {
@@ -189,6 +212,7 @@ function Properties() {
             </tbody>
           </table>
         </div>
+        {/* Create a form to create a new property */}
         <form className="form" onSubmit={(e) => e.preventDefault()}>
           <h2>Create Property</h2>
           <label>Title:</label>
@@ -280,6 +304,7 @@ function Properties() {
         </form>
 
         <form className="form" onSubmit={(e) => e.preventDefault()}>
+          {/* Update Form */}
           <h2>Update Property</h2>
           <label>Select Property ID to update: </label>
           <select className="dropdown" onChange={(e) => setSelectedPropertyID(e.target.value)} value={SelectedPropertyID}>

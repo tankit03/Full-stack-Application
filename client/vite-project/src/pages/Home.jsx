@@ -1,3 +1,9 @@
+// 1 Citation for the following function:
+// 2 Date: 12/18/2022
+// 3 Based on Pedro Tech video on implementing a CRUD application with React and Node.js
+// 4 Source URL: https://www.youtube.com/watch?v=re3OIOr9dJI
+// 5
+
 import React from 'react';
 import { useState, useEffect } from 'react';
 import homeImage1 from '../assets/home1.png';
@@ -6,6 +12,8 @@ import homeImage3 from '../assets/homeImage3.png';
 
 
 export default function Home() {
+
+    // Array of images
 
     const images = [homeImage1, homeImage2, homeImage3]; // Array of images
     const [currentImage, setCurrentImage] = useState(images[0]); // State to keep track of the current image

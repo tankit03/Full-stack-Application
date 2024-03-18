@@ -1,3 +1,9 @@
+// 1 Citation for the following function:
+// 2 Date: 12/18/2022
+// 3 Based on Pedro Tech video on implementing a CRUD application with React and Node.js
+// 4 Source URL: https://www.youtube.com/watch?v=re3OIOr9dJI
+// 5
+
 import { useEffect, useState } from 'react'
 import Axios from 'axios'
 import { Route, Routes } from 'react-router-dom'
@@ -6,18 +12,25 @@ import { Route, Routes } from 'react-router-dom'
 
 function PropertyFeature() {
 
+    // State hooks with proper camelCase naming
+
     const [FeatureID, setFeatureID] = useState("");
     const [Feature, setFeature] = useState("");
     const [Featurelist, setFeatureList] = useState([]);
 
+    // New viewing state hooks
+
     const [SelectedFeatureID, setSelectedFeatureID] = useState("");
     const [NewFeature, setNewFeature] = useState("");
 
+    // Fetch all data from the server
     const fetchFeatures = async () => {
         const response = await Axios.get('http://flip1.engr.oregonstate.edu:9125/api/feature/get')
         const data = response.data;
         setFeatureList(data);
     }
+
+    // Fetch data from the server
 
     useEffect(() => {
         const getFeatures = async () => {
@@ -27,6 +40,8 @@ function PropertyFeature() {
         }
         getFeatures();
     }, []);
+
+    // Fetch all data from the server
 
     const createFeature = async () => {
         try{
@@ -44,6 +59,8 @@ function PropertyFeature() {
             console.error(error);
         }
     };
+
+    // Fetch all data from the server
     
 
     const deleteFeature = async (id) => {
@@ -56,6 +73,8 @@ function PropertyFeature() {
             console.error(error);
         }
     }
+
+    // Fetch all data from the server
 
     const updateFeature = async (id) => {
 
@@ -100,6 +119,7 @@ function PropertyFeature() {
                     </tbody>
                 </table>
             </div>
+            {/* Create Feature Form */}
             <form className="form" onSubmit={(e) => e.preventDefault()}>
                 <h2>Create Feature's</h2>
                 <label>Feature:</label>

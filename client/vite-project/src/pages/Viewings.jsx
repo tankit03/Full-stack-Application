@@ -1,3 +1,9 @@
+// 1 Citation for the following function:
+// 2 Date: 12/18/2022
+// 3 Based on Pedro Tech video on implementing a CRUD application with React and Node.js
+// 4 Source URL: https://www.youtube.com/watch?v=re3OIOr9dJI
+// 5
+
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
  
@@ -16,6 +22,7 @@ function Viewings() {
     const [newUserId, setNewUserId] = useState("");
     const [newPropertyId, setNewPropertyId] = useState("");
 
+    // Fetch all data from the server
     const urls = {
         viewings: 'http://flip1.engr.oregonstate.edu:9125/api/viewing/get',
         agents: 'http://flip1.engr.oregonstate.edu:9125/api/agents/get',
@@ -23,6 +30,7 @@ function Viewings() {
         properties: 'http://flip1.engr.oregonstate.edu:9125/api/properties/get'
     };
 
+    // Fetch data from the server
     const fetchData = async (url) => {
         try {
             const response = await Axios.get(url);
@@ -32,6 +40,8 @@ function Viewings() {
             return [];
         }
     };
+
+    // Fetch all data from the server
 
     const fetchAllData = async () => {
         try {
@@ -54,6 +64,8 @@ function Viewings() {
     useEffect(() => {
         fetchAllData();
     }, []);
+
+    // Create, delete, and update viewing functions
  
     const createViewing = async () => {
         console.log("back-end data: ",newViewingDate, newComments, newAgentId, newUserId, newPropertyId);
@@ -73,6 +85,8 @@ function Viewings() {
             console.error(error);
         }
     };
+
+    // Delete viewing function
  
     const deleteViewing = async (id) => {
         try {
@@ -82,6 +96,8 @@ function Viewings() {
             console.error(error);
         }
     };
+
+    // Update viewing function
  
     const updateViewing = async (id) => {
         try {

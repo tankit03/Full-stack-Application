@@ -1,9 +1,19 @@
-import { useEffect, useState } from "react"
-import Axios from "axios"
-import { Route, Routes } from "react-router-dom"
+// 1 Citation for the following function:
+// 2 Date: 12/18/2022
+// 3 Based on Pedro Tech video on implementing a CRUD application with React and Node.js
+// 4 Source URL: https://www.youtube.com/watch?v=re3OIOr9dJI
+// 5
 
+// Import necessary libraries and components
+import { useEffect, useState } from "react" // Hooks for managing state and side effects
+import Axios from "axios" // Library for making HTTP requests
+import { Route, Routes } from "react-router-dom" // Components for managing routes
+
+
+// Define the Review component
 function Review() {
 
+    // State hooks for storing lists of reviews, agents, properties, and users
     const [reviewList, setReviewList] = useState([]);
     const [agentList, setAgentList] = useState([]);
     const [propertyList, setPropertyList] = useState([]);
@@ -21,7 +31,7 @@ function Review() {
     const [newpropertiesReviewReviewID, setnewpropertiesReviewReviewID] = useState("");
     const [newUserId, setnewUserId] = useState("");
 
-    
+    // URLs for fetching data from the API
     const urls = {
         reviews: 'http://flip1.engr.oregonstate.edu:9125/api/review/get',
         agents: 'http://flip1.engr.oregonstate.edu:9125/api/agents/get',
@@ -57,15 +67,18 @@ function Review() {
         }
     };
 
+    // Use the useEffect hook to fetch all data when the component mounts
     useEffect(() => {
 
         fetchAllData();
     
     }, []);
 
+    // Function to create a new review
     const CreateReview = async () => {
             
         try {
+             // Send a POST request to the server to create a new review
             const response =  await Axios.post('http://flip1.engr.oregonstate.edu:9125/api/review/insert', {
                 ReviewID: newReviewID,
                 Rating: newRating,
@@ -87,18 +100,24 @@ function Review() {
         }      
     };
 
+    // Function to delete a review
+
     const deleteReview = async (id) => {
         try {
+            // Send a DELETE request to the server to delete a review
             const response = await Axios.delete(`http://flip1.engr.oregonstate.edu:9125/api/review/delete/${id}`);
-            console.log(response);
-            await fetchAllData();
+            console.log(response);  // Log the server's response
+            await fetchAllData(); // Fetch all data again to update the state
         } catch (error) {
-            console.error(error);
+            console.error(error); // Log any errors that occur during deletion
         }
     };
 
+    // Function to update a review
+
     const updateReview = async (id) => {
         try{
+            // Send a PUT request to the server to update a review
             await Axios.put(`http://flip1.engr.oregonstate.edu:9125/api/review/update`, {
                 ReviewID: id,
                 Rating: newRating,
@@ -109,20 +128,22 @@ function Review() {
                 properties_Review_ReviewID: newpropertiesReviewReviewID,
                 Users_UserID: newUserId
             });
-            await fetchAllData();
+            await fetchAllData(); // Fetch all data again to update the state
         } catch (error) {
-            console.error(error);
+            console.error(error); // Log any errors that occur during updating
         }
     };
 
-
+    // render the Review component
 
     return (
+        // Return the JSX for the Review component
         <div className="App">
             <h1>Review's</h1>
             <div className="table-container">
                <table>
                 <thead>
+                    {/* Table headers */}
                     <tr>
                         <th>ReviewID</th>
                         <th>Rating</th>
@@ -136,6 +157,8 @@ function Review() {
                     </tr>
                 </thead>
                 <tbody>
+
+                    {/* Map over the reviewList array and display the data in the table */}
 
                   {reviewList.map((val) => (
                     <tr key={val.ReviewID}>
@@ -155,6 +178,8 @@ function Review() {
                 </tbody>
                 </table> 
             </div>
+
+            {/* Form to create a new review */}
             <form className="form" onSubmit={(e) => e.preventDefault()}>
                 <h2>Create User</h2>
                 <label>Create rating</label>
@@ -210,6 +235,8 @@ function Review() {
             </form>
     
             <form className="form" onSubmit={(e) => e.preventDefault()}>
+
+                {/* Form to update a review */}
 
                 <h2>Update Review</h2>
                 <label>Select Review ID to update: </label>

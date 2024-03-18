@@ -1,11 +1,18 @@
+// 1 Citation for the following function:
+// 2 Date: 12/18/2022
+// 3 Based on Pedro Tech video on implementing a CRUD application with React and Node.js
+// 4 Source URL: https://www.youtube.com/watch?v=re3OIOr9dJI
+// 5
+
 import { useEffect, useState } from "react"
 import Axios from "axios"
 import { Route, Routes } from "react-router-dom"
 
 
-
+// define the User function
 function User() {
 
+    // define the useState function to set the state of the variables
     const [UserID, setUserID] = useState(" ");
     const [firstName, setfirstName] = useState(" ");
     const [lastName, setlastName] = useState(" ");
@@ -15,6 +22,7 @@ function User() {
     const [PasswordHash, setPasswordHash] = useState(" ");
     const [UserList, setUserList] = useState([]);
 
+    // define the useState function to set the state of the variables
     const [SelectedUserID, setSelectedUserID] = useState(" ");
     const [NewFirstUserName, setNewFirstUserName] = useState(" ");
     const [NewLastUserName, setNewLastUserName] = useState(" ");
@@ -23,13 +31,14 @@ function User() {
     const [NewUserBudget, setNewUserBudget] = useState(" ");
     const [NewUserPassword, setNewUserPassword] = useState(" ");
 
-
+    // define the fetchUsers function to fetch the users from the database
     const fetchUsers = async () => {
         const response = await Axios.get('http://flip1.engr.oregonstate.edu:9125/api/users/get')
         const data = response.data;
         setUserList(data);
     }
 
+    // define the useEffect function to fetch the users from the database
     useEffect(() => {
         const getUsers = async () => {
             const response = await Axios.get('http://flip1.engr.oregonstate.edu:9125/api/users/get')
@@ -40,6 +49,8 @@ function User() {
         getUsers();
 
     }, []);
+
+    // define the createUser function to create a new user
 
     const createUser = async () => {
 
@@ -64,6 +75,8 @@ function User() {
         }
     };
 
+    // define the deleteUser function to delete a user
+
     const deleteUser = async (id) => {
 
         try{
@@ -74,6 +87,8 @@ function User() {
             console.error(error);
         }   
     }
+
+    // define the updateUser function to update a user
 
     const updateUser = async (id) => {
         try{
@@ -95,11 +110,14 @@ function User() {
             console.error(error);
         }
     }
+
+    // return the following html code
            
     return (
         <div className="App">
             <h1>Users</h1>
             <div className="table-container">
+                {/* if the UserList is empty, display the message */}
                 <table>
                     <thead>
                         <tr>
@@ -114,6 +132,7 @@ function User() {
                         </tr>
                     </thead>
                     <tbody>
+                        
                         {UserList.map((val) => (
                             <tr key={val.UserID}>
                                 <td>{val.UserID}</td>
@@ -131,6 +150,9 @@ function User() {
                     </tbody>
                 </table>
             </div>
+
+            {/* create a form to create a new user */}
+
                 <form className="form" onSubmit={(e) => e.preventDefault()}>
                     <h2>Create User</h2>
                     <label>User ID:</label>
@@ -169,6 +191,9 @@ function User() {
                             <option key={user.UserID} value={user.UserID}>{user.UserID}</option>
                         ))}
                     </select>
+
+                    {/* if the SelectedUserID is not empty, display the form to update the user */}
+
                     <label>First Name:</label>
                     <input type="text" placeholder="First name" onChange={(e) => {setNewFirstUserName(e.target.value)}} />
                     <label>Last Name:</label>

@@ -6,7 +6,9 @@ import { Route, Routes } from 'react-router-dom'
 
 function App() {
 
-  const [butttonPopup, setButtonPopup] = useState(false);
+
+
+  // State hooks with proper camelCase naming
 
   const [btntrigger, setTrigger] = useState(false);
   const [AgentID, setAgentID] = useState("");
@@ -18,6 +20,8 @@ function App() {
   const [LicenseNumber, setLicenseNumber] = useState("");
   const [agentList, setAgentList] = useState([]);
 
+  // New viewing state hooks
+
   const [SelectedAgentID, setSelectedAgentID] = useState("");
   const [NewFirstAgentName, setNewFirstAgentName] = useState("");
   const [NewLastAgentName, setNewLastAgentName] = useState("");
@@ -27,6 +31,7 @@ function App() {
   const [NewAgentLicense, setNewAgentLicense] = useState("");
 
 
+  // Fetch all data from the server
 
   const fetchAgents = async () => {
     const response = await Axios.get('http://flip1.engr.oregonstate.edu:9125/api/agents/get')
@@ -34,6 +39,8 @@ function App() {
     setAgentList(data);
 
   }
+
+  // Fetch data from the server
 
   useEffect(() => {
     const getAgents = async () => {
@@ -47,6 +54,8 @@ function App() {
     getAgents();
 
   }, []);
+
+  // Fetch all data from the server
 
   const createAgent = async () => {
 
@@ -71,6 +80,8 @@ function App() {
     }
   };
 
+  // Fetch all data from the server
+
   const deleteAgent = async (id) => {
 
     try {
@@ -84,6 +95,8 @@ function App() {
 
     }
   }
+
+  // Fetch all data from the server
 
   const updateAgent = async (id) => {
 
@@ -148,6 +161,7 @@ function App() {
           </table>
         </div>
         <form className="form" onSubmit={(e) => e.preventDefault()}>
+          {/* Create Agent Form */}
           <h2>Create Agent</h2>
           <label>First Name:</label>
           <input type="text" placeholder="First name" onChange={(e) => {
