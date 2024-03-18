@@ -15,20 +15,6 @@ export default function Navbar() {
                 <Link to="/Property-Comparison">Property Comparison</Link>
                 </li>
             </ul>
-            
-            {/* <a href="/" className="Site-title">The Real Estate Database</a> */}
-            {/* <ul>
-                <li>
-                <a href="/">Home</a>
-                <a href="/properties">properties</a>
-                <a href="/agent">Agent's</a>
-                <a href="/user">User</a>
-                <a href="/viewings">Viewing's</a>
-                <a href="/reviews">Review's</a>
-                <a href="/Property-Features">Property Feature's</a>
-                <a href="/Propety-Comparison">Property Comparison</a>
-                </li>
-            </ul> */}
         </nav>
     )
 }

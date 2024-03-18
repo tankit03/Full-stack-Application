@@ -1,3 +1,9 @@
+// 1 Citation for the following function:
+// 2 Date: 12/18/2022
+// 3 Based on Pedro Tech video on implementing a CRUD application with React and Node.js
+// 4 Source URL: https://www.youtube.com/watch?v=re3OIOr9dJI
+// 5
+
 import { useEffect, useState } from 'react'
 import Axios from 'axios'
 import { Route, Routes } from 'react-router-dom'
