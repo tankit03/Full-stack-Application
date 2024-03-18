@@ -17,12 +17,12 @@ This project is a comprehensive real estate management system developed to simpl
 1. Clone the repository to your local machine.
 2. Navigate to the project directory and install dependencies:
 
-# Frontend
+# Frontend Set up
 1. Cd client
 2. cd vite-project
 3. cd npm install
 4. npm run dev
 
-# Backend
+# Backend Set up
 1. cd server
 2. npm run devStart
